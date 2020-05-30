@@ -1,0 +1,29 @@
+<agm-map *ngIf="getDefaultMapCenter()"
+  [latitude]="getDefaultMapCenter().lat"
+  [longitude]="getDefaultMapCenter().lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false"
+  (mapDblClick)="mapDoubleClicked($event)"
+  (mapReady)="onMapReady()"
+  [fitBounds]="viewport"
+  [styles]='darkTheme'>
+
+  <agm-marker
+      *ngFor="let m of markers; let i = index"
+      (markerClick)="markerClicked(m, i)"
+      (markerDblClick)="markerSeleted(m)"
+      (markerRightClick)="markerRightClicked(m)"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [label]="{
+        color: '#ffffff',
+        fill: '#000000',
+        text: m.label
+      }"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd(m, $event)"
+      (mouseOver)="mouseOnMarker(m, $event)"
+      [iconUrl]="getIconUri(m)">
+  </agm-marker>
+</agm-map>

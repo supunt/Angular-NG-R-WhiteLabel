@@ -1,0 +1,8 @@
+<div>
+  <label *ngIf="label" [ngClass]="labelClassName" class="app-label">{{label}}</label>
+  <span *ngIf="toolTip">{{toolTip}}</span>
+  <textarea type="text" [ngClass]="className" [placeholder]="placeholder" [maxlength]="maxlength" [formControl]="ngControl.control"
+    appInputStatus appFocus (blur)="onBlur($event)" [readonly]="readonly"></textarea>
+  <ng-content></ng-content>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

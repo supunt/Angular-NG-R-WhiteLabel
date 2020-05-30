@@ -1,0 +1,62 @@
+.app-pager {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  margin-top: 2px;
+  list-style: none;
+  border-bottom: 2px solid lightgray;
+  padding-bottom: 7px;
+}
+
+ul.app-pager a {
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  color: lightskyblue !important;
+  cursor: pointer;
+}
+
+ul.app-pagery li {
+  margin-top: 5px;
+  border: 1px solid transparent;
+}
+
+#first {
+  background-image: url("/assets/icons/First-gray.svg");
+  background-position: 15% center;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+
+#previous {
+  background-image: url("/assets/icons/Previous-gray.svg");
+  background-position: 15% center;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+
+#next {
+  background-image: url("/assets/icons/Next-gray.svg");
+  background-position: 15% center;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+
+#last {
+  background-image: url("/assets/icons/Last-gray.svg");
+  background-position: 15% center;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+
+#infoLabel {
+  cursor: default;
+  border-bottom:none;
+}
+
+ul.app-pager a:hover  {
+  border-bottom: 4px solid white;
+}

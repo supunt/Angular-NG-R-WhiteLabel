@@ -1,0 +1,15 @@
+<app-user-welcome></app-user-welcome>
+<div class="row">
+  <div class="col-sm-12">
+    <h4>Use dropped pin or start typing address</h4>
+  </div>
+  <div class="col-sm-12">
+    <app-address-search #addressSearch (addressPredSelected)="OnAddressPrediction($event)"></app-address-search>
+    <app-google-map
+      (pinDropped)="OnPinDrop($event)"
+      (pinSelected)="OnPinSelected($event)"
+      (deleteMarker)="OnDeleteMarker($event)" #theMap></app-google-map>
+    <hr>
+    <app-address-list [myLocations]="activeAddressList" (addressClicked)="map.FocusMarker($event)"></app-address-list>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<div>
+  <label *ngIf="label" class="app-label">{{label}}</label>
+  <input [ngClass]="className" type="tel" [placeholder]="placeholder" [maxlength]="maxlength" [formControl]="ngControl.control" value="value"
+    appInputStatus appFocus>
+  <ng-content></ng-content>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

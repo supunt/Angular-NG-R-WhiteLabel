@@ -1,0 +1,15 @@
+<div>
+  <div class="row no-gutters">
+    <div class="col col-auto">
+      <label [ngClass]="className">
+        <input type="checkbox" [formControl]="ngControl.control" [id]="id" appInputStatus appFocus [name]="name" />
+        <span class="checkmark" [ngClass]="{'app-border-error' : statusInvalid}"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label *ngIf="label" [for]="id" [innerHtml]="label" [ngClass]="className" class="checkbox-label"></label>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

@@ -1,0 +1,52 @@
+.gta-h2 {
+    font-weight: 600;
+    padding-top: 30px;
+    padding-bottom:20px;
+    font-size: 2.5em;
+}
+
+.gta-h3 {
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+.gta-responsive-16 {
+  font-size: 16px;
+}
+
+.gta-responsive-15 {
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .gta-h2 {
+      padding-top: 15px;
+      padding-bottom:10px;
+      font-size: 2em;
+  }
+
+  .gta-h3 {
+    font-size: 1.25em;
+  }
+
+  .gta-responsive-16 {
+    font-size: 14px;
+  }
+
+  .gta-responsive-15 {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .gta-h2 {
+      font-size: 1.5em;
+  }
+
+  .gta-h3 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
+
+

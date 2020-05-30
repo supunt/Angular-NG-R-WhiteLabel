@@ -1,0 +1,39 @@
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="tel"],
+input[type="search"],
+input[type="number"] {
+  height: 40px;
+  width: 100%;
+  border: 1px solid lightgray;
+  background-color: white;
+  padding-top: auto;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  padding-bottom: auto;
+  border-radius: 3px;
+}
+
+input[type="text"]:disabled,
+input[type="email"]:disabled,
+input[type="password"]:disabled,
+input[type="url"]:disabled,
+input[type="tel"]:disabled,
+input[type="search"]:disabled,
+input[type="number"]:disabled {
+  background: lightgray;
+}
+
+@media(max-width: 576px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="number"] {
+    height: 30px;
+  }
+}

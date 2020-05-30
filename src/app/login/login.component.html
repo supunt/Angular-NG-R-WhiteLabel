@@ -1,0 +1,51 @@
+<div class="row justify-content-center pt-5">
+  <div class="col-sm-8 d-flex justify-content-center">
+    <form [formGroup]="formGroup">
+      <div class="row pb-3">
+        <div class="col-sm-12 d-flex justify-content-center">
+          <h2>Login</h2>
+        </div>
+      </div>
+      <div class="row pb-2">
+        <div class="col-sm-12">
+          <hr>
+        </div>
+      </div>
+      <div class="row pb-2">
+        <div class="col-sm-6">
+          User Name
+        </div>
+        <div class="col-sm-6">
+          <app-textbox key="username" formControlName="username" placeholder="Enter Username"></app-textbox>
+        </div>
+      </div>
+      <div class="row pb-2 pb-2">
+        <div class="col-sm-6">
+          Password
+        </div>
+        <div class="col-sm-6">
+          <app-password key="password" formControlName="password" placeholder="Enter Password"></app-password>
+        </div>
+      </div>
+      <div *ngIf="loginError != null" class="row text-danger">
+        <div class="col-sm-12">
+          Login Failed : {{loginError}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            [disabled]="!this.formGroup.valid || sendAsync"
+            [ngClass]="{ 'btn btn-outline-info' : this.formGroup.valid}"
+            class="btn btn-outline-secondary w-100"
+            (click)="login()">Login</button>
+        </div>
+        <div class="col-sm-6">
+          <i *ngIf="sendAsync" class="fa fa-spinner fa-spin float-right"></i>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

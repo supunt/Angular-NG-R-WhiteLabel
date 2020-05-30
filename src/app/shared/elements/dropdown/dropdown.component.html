@@ -1,0 +1,13 @@
+<div class="app-dropdown" [ngClass]="className">
+    <div class="app-dropdown-title-container">
+      <div class="app-dropdown-title">
+          {{label}}
+      </div>
+      <button class="app-dropbtn"></button>
+    </div>
+    <div class="app-dropdown-content table-link-bold">
+      <ng-container  *ngFor="let d of data">
+      <a  href="javascript:void(0)" (click)="itemClicked(d[optionValue], d)">{{d[optionName]}}</a>
+    </ng-container>
+     </div>
+  </div>

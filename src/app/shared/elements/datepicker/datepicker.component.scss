@@ -1,0 +1,39 @@
+.date-picker {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+
+    input {
+      position: relative;
+      flex: auto;
+      width: 1% !important;
+      margin-bottom: 0;
+      border-right: none;
+    }
+
+    .pick-btn {
+      margin-left: -1px;
+    }
+
+    .app-button-primary{
+        width: 40px;
+    }
+
+    .app-button-primary:hover {
+        border: 1px solid transparent;
+      }
+  }
+
+@media(max-width:576px) {
+  .date-picker {
+    .app-button-primary{
+      width: 30px;
+      height: 30px;
+      .cal_icon {
+        width: 15px;
+      }
+    }
+  }
+}

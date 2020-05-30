@@ -1,0 +1,7 @@
+<div>
+  <label *ngIf="label" [ngClass]="labelClassName" class="app-label">{{label}}</label>
+  <input type="text" [ngClass]="className" [placeholder]="placeholder" [maxlength]="maxlength" [formControl]="ngControl.control"
+    allowDecimals="allowDecimals" (blur)="onBlur($event)"   [readonly]="readonly" appInputStatus appFocus>
+  <ng-content></ng-content>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

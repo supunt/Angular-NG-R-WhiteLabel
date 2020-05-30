@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Dosis', sans-serif !important;
+  overflow-x: hidden;
+  min-width: 376px;
+  background-color: lightgray;
+
+  hr.divider {
+      margin: 0;
+  }
+
+  a:active, a:focus {
+    outline: 0;
+    border: none;
+  }
+
+  .container {
+    background-color: white;
+    min-height: 800px;
+  }
+}
+
+
+@import 'style/theme.scss';
+@import 'style/list-style.scss';
+@import 'style/typography.scss';
+@import 'style/owl-overrides.scss';
+@import 'style/textbox.scss';
+@import 'style/textarea.scss';
+@import 'style/links.scss';
+@import 'style/error-component.scss';
+@import 'style/button.scss';
+@import 'style/select.scss';
+@import 'style/radio.scss';
+@import 'style/pager.scss';
+@import 'style/image-wrappers.scss';

@@ -1,0 +1,6 @@
+<div class="row">
+  <div *ngFor="let agent of agentList" class="col-sm-12 pointer-cursor border pt-1 pb-1"
+  (click)="agentClicked.emit(agent)">
+    {{agent.userName}}
+  </div>
+</div>

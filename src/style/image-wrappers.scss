@@ -1,0 +1,48 @@
+.mini-image-wrapper {
+  border-top: 1px solid lightgray;
+  max-height: 180px;
+  cursor: pointer;
+}
+
+.main-image {
+  max-width: 100%;
+  max-height: 400px;
+}
+
+.mini-image {
+  max-width: 100%;
+  max-height: 140px;
+}
+
+.item-selected {
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-top: unset !important;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.no-bottom-border {
+  border-top: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+@media(max-width:768px) {
+  .main-image {
+    max-height: 260px;
+  }
+
+  .mini-image {
+    max-height: 80px;
+  }
+}
+
+@media(max-width:576px) {
+  .mini-image-wrapper {
+    max-width: 25% !important;
+  }
+}

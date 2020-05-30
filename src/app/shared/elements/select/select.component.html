@@ -1,0 +1,8 @@
+<div>
+  <label *ngIf="label" class="app-label">{{label}}</label>
+  <select class="app-select app-t6" [formControl]="ngControl.control" [ngClass]="className" appInputStatus appFocus>
+    <option *ngFor="let d of data" [disabled]="d.isNotActive" [value]="d[optionValue]">{{d[optionName]}}</option>
+  </select>
+  <ng-content></ng-content>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

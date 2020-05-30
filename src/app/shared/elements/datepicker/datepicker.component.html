@@ -1,0 +1,13 @@
+<div [ngClass]="className">
+  <label *ngIf="label" class="app-label app-label-secondary">{{label}}</label>
+  <div class="date-picker">
+    <input type="text" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate" [minDate]="minDate"
+      [formControl]="ngControl.control" rorFocus />
+    <div class="pick-btn">
+      <button class="app-button-primary" (click)="d.toggle()" type="button">
+        <img class="cal_icon" src="/assets/icons/Calendar.svg"></button>
+    </div>
+    <ng-content></ng-content>
+  </div>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

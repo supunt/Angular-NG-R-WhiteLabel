@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>E231D8AC-6CF5-472D-988F-9947DA890A92</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M15.1134715,17.626943 L17.626943,15.1134715 C18.065285,14.6751295 18.065285,13.9709845 17.626943,13.5326425 L13.0943005,9 L17.626943,4.46735751 C18.065285,4.02901554 18.065285,3.32487047 17.626943,2.8865285 L15.1134715,0.373056995 C14.6751295,-0.0652849741 13.9709845,-0.0652849741 13.5326425,0.373056995 L9,4.90569948 L4.46735751,0.373056995 C4.02901554,-0.0652849741 3.32487047,-0.0652849741 2.8865285,0.373056995 L0.373056995,2.8865285 C-0.0652849741,3.32487047 -0.0652849741,4.02901554 0.373056995,4.46735751 L4.90569948,9 L0.373056995,13.5326425 C-0.0652849741,13.9709845 -0.0652849741,14.6751295 0.373056995,15.1134715 L2.8865285,17.626943 C3.32487047,18.065285 4.02901554,18.065285 4.46735751,17.626943 L9,13.0943005 L13.5326425,17.626943 C13.9663212,18.0606218 14.6751295,18.0606218 15.1134715,17.626943 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="0" width="18" height="18"></rect>
+        <filter x="-961.1%" y="-705.6%" width="2022.2%" height="2022.2%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="46" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="50" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.147956295 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Style-guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="7.-Icons" transform="translate(-216.000000, -178.000000)">
+            <g id="Solid/times" transform="translate(216.000000, 178.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <g id="Color/Black" mask="url(#mask-2)">
+                    <g id="Black">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        <use fill="red" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

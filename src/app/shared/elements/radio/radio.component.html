@@ -1,0 +1,15 @@
+<div>
+  <div class="row no-gutters">
+    <div class="col col-auto">
+      <label class="app-radio">
+        <input type="radio" [id]="id" [name]="name" [formControl]="ngControl.control"  [value]="value" appInputStatus appFocus [attr.disabled]="disabled">
+        <span class="checkmark" [ngClass]="{'app-border-error' : statusInvalid}"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label *ngIf="label" [for]="id" [innerHtml]="label" [ngClass]="className" class="radio-label"></label>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

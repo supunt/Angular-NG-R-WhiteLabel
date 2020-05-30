@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Dropdown button</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Style-guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4.-Atoms" transform="translate(-478.000000, -909.000000)">
+            <g id="4.3-Selection-Box" transform="translate(70.000000, 802.000000)">
+                <g id="Season-of-Birth" transform="translate(168.000000, 83.000000)">
+                    <g id="Dropdown-button" transform="translate(240.000000, 24.000000)">
+                        <rect id="Rectangle" stroke="#17a2b8" fill="#ffffff" x="0.5" y="0.5" width="39" height="39"></rect>
+                        <polygon id="Triangle" fill="#17a2b8" transform="translate(20.000000, 20.000000) scale(1, -1) translate(-20.000000, -20.000000) " points="20 16 27 24 13 24"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

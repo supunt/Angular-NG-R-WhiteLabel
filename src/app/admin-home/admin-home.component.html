@@ -1,0 +1,37 @@
+<app-user-welcome></app-user-welcome>
+<div class="row pt-3">
+  <div class="col-sm-12">
+    <h4>Agent location Distribution</h4>
+  </div>
+</div>
+<hr>
+<app-google-map #theMap [pinDefaultMarker]="false" (pinSelected)="OnPinSelected($event)"></app-google-map>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row pb-1 pt-3">
+      <div class="col-sm-12">
+        <h5>Agents</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row pl-2 pr-2">
+      <div class="col-sm-12">
+        <app-agent-list (agentClicked)="agentSelected($event)"></app-agent-list>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="row pb-1 pt-3">
+      <div class="col-sm-12">
+        <h5>Agent's Locations</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row pl-2 pr-2">
+      <div class="col-sm-12">
+        <app-address-list [myLocations]="selectedAgentLocations" (addressClicked)="OnAddressClicked($event)"></app-address-list>
+      </div>
+    </div>
+  </div>
+</div>
+

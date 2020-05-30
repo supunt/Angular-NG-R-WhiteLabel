@@ -1,0 +1,14 @@
+<div [ngClass]="className">
+  <label *ngIf="label" class="app-label app-label-secondary">{{label}}</label>
+  <div>
+    <ngb-timepicker
+      [formControl]="ngControl.control"
+      [seconds]="showSeconds"
+      [hourStep]="hourStep"
+      [minuteStep]="minuteStep"
+      [secondStep]="secondStep"
+      [meridian]="meridian"></ngb-timepicker>
+    <ng-content></ng-content>
+  </div>
+  <app-error *ngIf="key" [control]="ngControl.control" [key]="key"></app-error>
+</div>

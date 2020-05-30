@@ -1,0 +1,133 @@
+<div class="modal-header align-items-center">
+  <h5>Address Information</h5>
+  <button type="button" class="close modal-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true" style="color:red"><b>x</b></span>
+  </button>
+</div>
+
+<div class="modal-body m-2">
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Pin Name -->
+        <div *ngIf="model.address != null && model.address !== ''" class="row mt-1 mb-1">
+          <div class="col-sm-6">
+            Selected Address
+          </div>
+          <div class="col-sm-6">
+            {{model?.address}}
+          </div>
+        </div>
+        <div class="row justify-content-end mb-1" *ngIf="model.address != null && model.address !== '' && !model.saved">
+          <div class="col-sm-4">
+            <button class="w-100 btn btn-outline-info" (click)="addressSearchEnabled = true">Edit Address</button>
+          </div>
+        </div>
+        <div *ngIf="model.address == null || model.address === ''" class="row mt-1 mb-1">
+          <div class="col-sm-6">
+            Selected Address
+          </div>
+          <div class="col-sm-6">
+            <button class="float-right w-100 btn btn-outline-info" (click)="addressSearchEnabled = true">Select Address</button>
+          </div>
+        </div>
+        <ng-container *ngIf="addressSearchEnabled">
+          <div class="border p-2 mb-1">
+            <h6>Start Typing ...</h6>
+            <app-address-search #addressSearch (addressPredSelected)="OnAddressPrediction($event)"></app-address-search>
+          </div>
+        </ng-container>
+
+        <!-- Name row -->
+        <div class="row mb-1">
+          <div class="col-sm-6">
+            Name
+          </div>
+          <div *ngIf="!model.saved" class="col-sm-6">
+            <app-textbox formControlName="name" placeholder="Enter Name" key="propertyName"></app-textbox>
+          </div>
+          <div *ngIf="model.saved" class="col-sm-6">
+            {{model?.label}}
+          </div>
+        </div>
+
+        <!-- Property Type -->
+        <div class="row mb-1">
+          <div class="col-sm-6">
+            Property Type
+          </div>
+          <div *ngIf="!model.saved" class="col-sm-6">
+            <app-select formControlName="propertyType"
+            placeholder="Select Property Type"
+            [optionName]="ddlOptionName"
+            [optionValue]="ddlOptionValue"
+            [data]="getPropertyTypeDDLObject()"></app-select>
+          </div>
+          <div *ngIf="model.saved" class="col-sm-6">
+            {{model != null && model.propertyType != null ? getPropertyTypeDisplay(model.propertyType): ''}}
+          </div>
+        </div>
+
+        <!-- Property State -->
+        <div class="row mb-1">
+          <div class="col-sm-6">
+            Property State
+          </div>
+          <div *ngIf="!model.saved" class="col-sm-6">
+            <app-select formControlName="propertyState" placeholder="Select Property Type"
+            [optionName]="ddlOptionName"
+            [optionValue]="ddlOptionValue"
+            [data]="getPropertyStateDDLObject()"></app-select>
+          </div>
+          <div *ngIf="model.saved" class="col-sm-6">
+            {{model != null && model.propertyState != null ? getPropertyStateDisplay(model.propertyState): ''}}
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="row mb-1">
+          <div class="col-sm-6">
+            Notes
+          </div>
+          <div *ngIf="!model.saved" class="col-sm-6">
+            <app-text-area formControlName="notes" placeholder="Enter Notes"></app-text-area>
+          </div>
+          <div *ngIf="model.saved" class="col-sm-6">
+            {{model?.notes}}
+          </div>
+        </div>
+        <!-- Errors -->
+        <ng-container *ngIf="validationErrors.length > 0">
+          <div class="row mb-1">
+            <div class="col-sm-6">
+              Notes
+            </div>
+            <div *ngIf="!model.saved" class="col-sm-6">
+              <app-text-area formControlName="notes" placeholder="Enter Notes"></app-text-area>
+            </div>
+            <div *ngIf="model.saved" class="col-sm-6">
+              {{model?.notes}}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Modal footer if required-->
+<div class="modal-footer">
+  <button *ngIf="!deleteDisabled"
+    type="button"
+    class="btn btn-danger float-left"
+    data-dismiss="modal"
+    (click)="deleteMarker()"
+    ngbAutofocus>Delete</button>
+  <button *ngIf="!model.saved"
+    type="button"
+    class="btn btn-primary btn-light"
+    [disabled]="!isFormValid()"
+    [ngClass]="{ 'button-active' : isFormValid()}"
+    data-dismiss="modal"
+    (click)="saveMarker()"
+    ngbAutofocus>Save</button>
+</div>

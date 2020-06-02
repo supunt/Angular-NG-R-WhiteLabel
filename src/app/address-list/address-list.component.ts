@@ -29,6 +29,6 @@ export class AddressListComponent implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OpenInfoWindow(item) {
-    this.infoSvc.Open(() => {}, () => {}, item, true);
+    this.infoSvc.Open(() => {}, () => {}, item, false);
   }
 }

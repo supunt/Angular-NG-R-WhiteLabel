@@ -53,6 +53,10 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
       (saveMarker) => {
       },
       (deleteMarker) => {
-      }, pin, true);
+        this.rxs(this.userSvc.removeLocationByAdmin(deleteMarker, this.selectedAgent.userName).subscribe(
+          success => this.loadAgentLocations(this.selectedAgent),
+          err => this.loadAgentLocations(this.selectedAgent)
+        ));
+      }, pin, false);
   }
 }

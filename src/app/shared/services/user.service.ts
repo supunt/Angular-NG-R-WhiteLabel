@@ -82,6 +82,11 @@ export class UserService implements OnDestroy {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
+  removeLocationByAdmin(mkr: Property, userId: string) {
+    return this.http.post(this.apiUrl + '/Location/delete/' + mkr.uuid + `/${userId}`, {})
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
   loadAgents() {
     return this.http.get(this.apiUrl + '/user/get-my-agents');
   }

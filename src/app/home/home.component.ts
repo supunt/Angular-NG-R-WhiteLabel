@@ -7,6 +7,12 @@ import { IconColorService } from '../shared/services/icon-color.service';
 import { GoogleMapComponent } from '../shared/components/google-map/google-map.component';
 import { AddressSearchComponent } from '../shared/components/address-search/address-search.component';
 import { UserService } from '../shared/services/user.service';
+import { Store, select } from '@ngrx/store';
+import LoggedInUserState from '../shared/state/user.state';
+import { Observable } from 'rxjs';
+import * as UserPropertyAction from '../shared/actions/user-properties.action';
+import { map } from 'rxjs/operators';
+import UserPropertiesState from '../shared/state/user-properties.state';
 
 
 declare var google: any;
@@ -18,16 +24,19 @@ declare var google: any;
 })
 export class HomeComponent extends ComponentBase implements OnInit {
 
-  @ViewChild('theMap', {static : false}) map: GoogleMapComponent;
+  @ViewChild('theMap', {static : false}) gmap: GoogleMapComponent;
   @ViewChild('addressSearch', {static : false}) addressSerch: AddressSearchComponent;
+
+  userLocations$: Observable<UserPropertiesState>;
 
   constructor(
     private searchSvc: AddressSearchModalService,
     private mapStateSvc: GoogleMapStateService,
     private userSvc: UserService,
     private addressInfoSvc: AddressInfoModalService,
-    private icolorSvc: IconColorService) {
-    super();
+    private icolorSvc: IconColorService, private store: Store<{ userProperties: UserPropertiesState }>) {
+      super();
+      this.userLocations$ = store.pipe(select('userProperties'));
   }
 
   pin: GoogleMapMarker = null;
@@ -37,38 +46,33 @@ export class HomeComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
+    this.rxs(this.userLocations$.subscribe(
+      data => {
+        this.activeAddressList = data.userProperties;
+        if (data.userPropertiesError != null) {
+          console.error(data.userPropertiesError);
+        } else {
+          if (this.gmap != null && this.mapReady) {
+            if (!this.markersPushed) {
+              this.gmap.SetUserMarkers(this.activeAddressList, false);
+              this.markersPushed = true;
+            }
+          }
+        }
+      }
+    ));
+
+    this.store.dispatch(UserPropertyAction.BeginGetPropertiesAction());
+
     this.rxs(this.mapStateSvc.$mapState.subscribe(
       (state) =>  {
         this.mapReady = true;
         this.addressSerch.mapReady();
         if (!this.markersPushed) {
-          this.map.SetUserMarkers(this.activeAddressList);
-          this.activeAddressList.forEach(x => this.userSvc.addLocation(x, true));
+          this.gmap.SetUserMarkers(this.activeAddressList, false);
           this.markersPushed = true;
         }
       }));
-
-    this.rxs(this.userSvc.$loggedInUser.subscribe(
-      (data: User) =>  {
-
-        if (data == null) {
-          return;
-        }
-
-        this.rxs(this.userSvc.getMyLocations().subscribe(
-          (userLocations: Property[]) => {
-            this.activeAddressList = userLocations;
-            if (this.map != null && this.mapReady) {
-              if (!this.markersPushed) {
-                this.activeAddressList.forEach(x => this.userSvc.addLocation(x, true));
-                this.map.SetUserMarkers(this.activeAddressList);
-                this.markersPushed = true;
-              }
-            }
-          }
-        ));
-      }
-    ));
   }
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -93,7 +97,7 @@ export class HomeComponent extends ComponentBase implements OnInit {
       },
       (deleteMarker) => {
         this.userSvc.removeLocation(deleteMarker);
-        this.map.DeleteMarker(deleteMarker);
+        this.gmap.DeleteMarker(deleteMarker);
       }, pin);
   }
 
@@ -111,13 +115,14 @@ export class HomeComponent extends ComponentBase implements OnInit {
     locAddr.propertyState = pin.propertyState;
     locAddr.saved = pin.saved;
     console.log('Saving marker', locAddr);
-    this.userSvc.addLocation(locAddr);
+
+    this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: locAddr }));
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   OnDeleteMarker(pin: Property) {
     console.log('Deleting marker', pin);
-    this.userSvc.removeLocation(pin);
+    this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: pin }));
   }
 
 
@@ -138,8 +143,8 @@ export class HomeComponent extends ComponentBase implements OnInit {
       };
 
       console.log('Adding new marker by search', newMarker);
-      this.map.markers.push(newMarker);
-      this.map.FocusMarker(newMarker);
+      this.gmap.markers.push(newMarker);
+      this.gmap.FocusMarker(newMarker);
     });
   }
 }

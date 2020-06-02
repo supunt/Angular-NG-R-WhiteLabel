@@ -12,6 +12,10 @@ import { HomeModule } from './home/home.module';
 import { AdminHomeModule } from './admin-home/admin-home.module';
 import { AgentListModule } from './agent-list/agent-list.module';
 import { JwtInterceptor } from './shared/export';
+import { StoreModule } from '@ngrx/store';
+import { UserPropertyReducer } from './shared/reducers/user-properties.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserPropertiesEffects } from './shared/effects/user-properties.effects';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { JwtInterceptor } from './shared/export';
     NgbModule,
     HttpClientModule,
     AdminHomeModule,
-    AgentListModule
+    AgentListModule,
+    StoreModule.forRoot({ userProperties: UserPropertyReducer }),
+    EffectsModule.forRoot([UserPropertiesEffects])
   ],
   providers: [
     {

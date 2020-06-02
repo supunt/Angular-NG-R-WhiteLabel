@@ -149,7 +149,7 @@ export class GoogleMapComponent implements OnInit {
   // -------------------------------------------------------------------------------------------------------------------
   SetUserMarkers(markers: GoogleMapMarker[], append = true) {
     if (!append) {
-      this.markers = markers;
+      this.markers = markers.filter(x => x.uuid === this.defaultMarker.uuid);
     }
     for (const item of markers) {
       const existingMarker = this.markers.find(x => x.uuid === item.uuid);

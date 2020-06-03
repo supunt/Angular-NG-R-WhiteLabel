@@ -5,15 +5,6 @@ import { Property } from '../models/export';
 
 export const intialState = initializeState();
 
-function setPropertryAsSaved(properties: Property[], uuid: string): Property[] {
-
-    properties.forEach(x => {
-        if (x.uuid === uuid) {
-            x.saved = true;
-        }
-    });
-    return properties;
-}
 
 function removePropertry(properties: Property[], uuid: string): Property[] {
     let index = -1;
@@ -27,7 +18,9 @@ function removePropertry(properties: Property[], uuid: string): Property[] {
     }
 
     if (index !== -1) {
-        return properties.splice(index, 1);
+        const newState = properties.slice();
+        newState.splice(index, 1);
+        return newState;
     }
 
     return properties;
@@ -53,7 +46,7 @@ const reducer = createReducer(
   on(UserPropertyAction.SavePropertyAction, (state: UserPropertiesState, property: Property) => {
     return {
         ...state,
-        userProperties: setPropertryAsSaved(state.userProperties, property.uuid),
+        userProperties: [...state.userProperties, property],
         userPropertiesError: null
     };
   }),
@@ -72,9 +65,12 @@ const reducer = createReducer(
     };
   }),
   on(UserPropertyAction.SuccessRemovePropertyAction, (state: UserPropertiesState, { payload }) => {
+    console.log('SuccessRemovePropertyAction')
+    const newMarkers = removePropertry(state.userProperties, payload.uuid);
+    console.log(newMarkers)
     return {
         ...state,
-        userProperties: removePropertry(state.userProperties, payload.uuid),
+        userProperties: newMarkers,
         userPropertiesError: null
     };
   }),

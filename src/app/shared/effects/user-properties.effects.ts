@@ -41,7 +41,7 @@ export class UserPropertiesEffects {
           })
           .pipe(
             map((data: Property) => {
-              return UserPropertyActions.SuccessSavePropertyAction({ payload: data });
+              return UserPropertyActions.SuccessSavePropertyAction({ payload: action.payload });
             }),
             catchError((error: Error) => {
               return of(UserPropertyActions.ErrorPropertyAction(error));
@@ -61,7 +61,7 @@ export class UserPropertiesEffects {
           })
           .pipe(
             map((data: Property) => {
-              return UserPropertyActions.SuccessRemovePropertyAction({ payload: data });
+              return UserPropertyActions.SuccessRemovePropertyAction({ payload: action.payload });
             }),
             catchError((error: Error) => {
               return of(UserPropertyActions.ErrorPropertyAction(error));

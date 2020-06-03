@@ -1,10 +1,15 @@
 .user-welcome {
-    padding: 20px;
+    padding: 5px;
     top: 10px;
-    right: 20px;
+    right: 0px;
     position: absolute;
     z-index: 1;
     background-color: white;
     border-top-left-radius: 50vh;
     border-bottom-left-radius: 50vh;
+    vertical-align:middle;    
+
+    i {
+        font-size: 20px;
+    }
 }

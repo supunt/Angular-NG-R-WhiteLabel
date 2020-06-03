@@ -17,7 +17,7 @@ export class AddressInfoModalService implements OnDestroy {
   public  Open(
     saveCallback,
     deleteCallback,
-    model: any,
+    model: Property,
     deleteDisabled = false
   ) {
     this.modalRef = this.modalService.open(AddressInfoModalComponent, { backdrop: 'static'});

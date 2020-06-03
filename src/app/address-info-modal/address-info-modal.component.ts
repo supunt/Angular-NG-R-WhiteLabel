@@ -70,10 +70,10 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
       notes: FormFields.default()
     });
 
-    this.formGroup.controls.name.setValue('' , {emitEvent : false});
+    this.formGroup.controls.name.setValue(this.model.label , {emitEvent : false});
     this.formGroup.controls.notes.setValue(this.model.notes , {emitEvent : false});
-    this.formGroup.controls.propertyType.setValue(null , {emitEvent : false});
-    this.formGroup.controls.propertyState.setValue(null , {emitEvent : false});
+    this.formGroup.controls.propertyType.setValue(this.model.propertyType , {emitEvent : false});
+    this.formGroup.controls.propertyState.setValue(this.model.propertyState , {emitEvent : false});
 
     this.rxs(this.formGroup.controls.name.valueChanges.subscribe(
       data => this.model.label = data

@@ -96,20 +96,6 @@
             {{model?.notes}}
           </div>
         </div>
-        <!-- Errors -->
-        <ng-container *ngIf="validationErrors.length > 0">
-          <div class="row mb-1">
-            <div class="col-sm-6">
-              Notes
-            </div>
-            <div *ngIf="!model.saved" class="col-sm-6">
-              <app-text-area formControlName="notes" placeholder="Enter Notes"></app-text-area>
-            </div>
-            <div *ngIf="model.saved" class="col-sm-6">
-              {{model?.notes}}
-            </div>
-          </div>
-        </ng-container>
       </div>
     </div>
   </form>

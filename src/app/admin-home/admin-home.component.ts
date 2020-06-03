@@ -43,12 +43,12 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OnAddressClicked(marker: GoogleMapMarker) {
+  OnAddressClicked(marker: Property) {
     this.mapRef.FocusMarker(marker);
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OnPinSelected(pin: GoogleMapMarker) {
+  OnPinSelected(pin: Property) {
     this.addressInfoSvc.Open(
       (saveMarker) => {
       },

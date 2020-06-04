@@ -16,15 +16,17 @@ import { StoreModule } from '@ngrx/store';
 import { UserPropertyReducer } from './shared/reducers/user-properties.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserPropertiesEffects } from './shared/effects/user-properties.effects';
+import { AddressSearchBubbleModule } from './address-search-bubble/address-search-bubble.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AddressListModule,
+    AddressSearchBubbleModule,
     HomeModule,
     SharedModule,
     NgbModule,

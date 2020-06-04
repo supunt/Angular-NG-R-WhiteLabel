@@ -185,8 +185,6 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   public addressSelectedFromList(address: GoogleMapMarker) {
-    console.log('Address selected', address);
-
     this.showAddresses = false;
     this.addressSelected.emit(address);
   }

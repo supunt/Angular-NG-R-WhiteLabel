@@ -44,10 +44,6 @@ export class TimepickerComponent implements OnInit {
   public setDisabledState(isDisabled: boolean): void {
   }
 
-  public ngOnInit(): void {    this.ngControl.control.valueChanges.subscribe( x => {
-    console.log(x);
-  });
+  public ngOnInit(): void {    this.ngControl.control.valueChanges.subscribe( x => {});
   }
-
-
 }

@@ -72,7 +72,6 @@ export class HomeComponent extends ComponentBase implements OnInit {
   // -------------------------------------------------------------------------------------------------------------------
   OnPinSelected(pin: Property) {
     const activeAddress = this.activeAddressList.filter(x => x.uuid === pin.uuid);
-    console.log('pin', pin)
     this.addressInfoSvc.Open(
       (saveMarker) => {
         saveMarker.draggable = false;
@@ -97,7 +96,6 @@ export class HomeComponent extends ComponentBase implements OnInit {
     locAddr.propertyState = pin.propertyState;
     locAddr.saved = pin.saved;
     locAddr.iconColor = this.icolorSvc.getUserIconColor();
-    console.log('Saving marker', locAddr);
 
     this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: locAddr }));
   }

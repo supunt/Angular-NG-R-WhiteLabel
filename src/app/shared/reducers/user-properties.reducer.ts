@@ -26,6 +26,7 @@ function removePropertry(properties: Property[], uuid: string): Property[] {
     return properties;
 }
 
+
 const reducer = createReducer(
   intialState,
   on(UserPropertyAction.GetPropertiesAction, state => state),
@@ -67,7 +68,6 @@ const reducer = createReducer(
   on(UserPropertyAction.SuccessRemovePropertyAction, (state: UserPropertiesState, { payload }) => {
     console.log('SuccessRemovePropertyAction')
     const newMarkers = removePropertry(state.userProperties, payload.uuid);
-    console.log(newMarkers)
     return {
         ...state,
         userProperties: newMarkers,

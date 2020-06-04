@@ -36,7 +36,6 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   ngOnInit() {
     this.rxs(this.userLocations$.subscribe(
       data => {
-        console.log('loc updated', data);
         this.myLocations = data.userProperties;
       }
     ));

@@ -10,7 +10,7 @@ import { ComponentsModule } from './components/components.module';
   exports: [
     AtElementsModule,
     AtDirectivesModule,
-    ComponentsModule
+    ComponentsModule,
   ]
 })
 export class SharedModule { }

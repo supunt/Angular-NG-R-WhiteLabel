@@ -14,10 +14,10 @@
       </div>
       <ng-container *ngIf="myLocations != null">
         <ng-container *ngFor="let item of myLocations">
-          <div class="w-25 pointer-cursor border" (click)="focussAddress(item)" (dblclick)="OpenInfoWindow(item)">
+          <div class="w-25 pointer-cursor border" (click)="focussAddress(item)" (dblclick)="OpenInfoWindow($event, item)">
             {{item?.label}}
           </div>
-          <div class="w-75 pointer-cursor border" (click)="focussAddress(item)" (dblclick)="OpenInfoWindow(item)">
+          <div class="w-75 pointer-cursor border" (click)="focussAddress(item)" (dblclick)="OpenInfoWindow($event, item)">
             {{item.address !== '' ? item.address : item.uuid}}
           </div>
         </ng-container>

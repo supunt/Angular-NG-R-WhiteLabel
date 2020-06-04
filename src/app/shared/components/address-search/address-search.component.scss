@@ -1,0 +1,20 @@
+.search {
+    padding: 5px;
+    margin-bottom: 5px;
+    top: 0px;
+    max-height: 30vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    background-color: transparent;
+    vertical-align: middle;    
+    align-content: center;
+
+    .search-bubble {
+        background-color: white;
+    }
+
+    i {
+        font-size: 20px;
+    }
+}

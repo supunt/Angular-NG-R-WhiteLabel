@@ -30,6 +30,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
   public searchedAddresses = [];
   public showSearchResult = false;
   public isLoading = false;
+  public isModal = false;
 
   private searchText$ = new Subject<any>();
 

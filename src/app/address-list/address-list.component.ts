@@ -22,7 +22,8 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   expanded = false;
 
   // -------------------------------------------------------------------------------------------------------------------
-  constructor(private infoSvc: AddressInfoModalService, private store: Store<{ userProperties: UserPropertiesState }>) {
+  constructor(private infoSvc: AddressInfoModalService,
+              private store: Store<{ userProperties: UserPropertiesState }>) {
     super();
     this.userLocations$ = store.pipe(select('userProperties'));
   }
@@ -45,7 +46,8 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OpenInfoWindow(item) {
+  OpenInfoWindow(event: Event, item) {
+    event.stopPropagation();
     this.infoSvc.Open(() => {}, () => {
       this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : item}));
     }, item, false);

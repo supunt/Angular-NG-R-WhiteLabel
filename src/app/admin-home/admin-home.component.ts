@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User, Property, GoogleMapMarker } from '../shared/export';
+import { User, Property, GoogleMapMarker, cloneProperty } from '../shared/export';
 import { UserService } from '../shared/services/user.service';
 import { ComponentBase } from '../shared/classes/exports';
 import { AgmMap } from '@agm/core';
@@ -48,7 +48,8 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OnPinSelected(pin: Property) {
+  OnPinSelected(item: Property) {
+    let editableItem = cloneProperty(item);
     this.addressInfoSvc.Open(
       (saveMarker) => {
       },
@@ -57,6 +58,6 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
           success => this.loadAgentLocations(this.selectedAgent),
           err => this.loadAgentLocations(this.selectedAgent)
         ));
-      }, pin, false);
+      }, editableItem, false);
   }
 }

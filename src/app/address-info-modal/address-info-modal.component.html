@@ -108,7 +108,7 @@
     data-dismiss="modal"
     (click)="deleteMarker()"
     ngbAutofocus>Delete</button>
-  <button *ngIf="!model.saved"
+  <button 
     type="button"
     class="btn btn-primary btn-light"
     [disabled]="!isFormValid()"

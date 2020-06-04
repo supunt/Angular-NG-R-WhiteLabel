@@ -26,6 +26,25 @@ function removePropertry(properties: Property[], uuid: string): Property[] {
     return properties;
 }
 
+function saveLocation(properties: Property[], prop: Property) {
+  let index = -1;
+  let idx = 0;
+  for (const item of properties) {
+    if (item.uuid === prop.uuid) {
+      index = idx;
+      break;
+    }
+    idx += 1;
+  }
+
+  if (index !== -1) {
+    const newState = properties.slice();
+    newState.splice(index, 1, prop);
+    return newState;
+  } else {
+    return [...properties, prop];
+  }
+}
 
 const reducer = createReducer(
   intialState,
@@ -54,7 +73,7 @@ const reducer = createReducer(
   on(UserPropertyAction.SuccessSavePropertyAction, (state: UserPropertiesState, { payload }) => {
     return {
         ...state,
-        userProperties: [...state.userProperties, payload],
+        userProperties: saveLocation(state.userProperties, payload),
         userPropertiesError: null
     };
   }),

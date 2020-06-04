@@ -40,13 +40,13 @@ export class UserPropertiesEffects {
       mergeMap(action => {
         this.loaderSvc.Open(null, 'Saving Property');
         return this.http
-        .post(this.apiUrl + '/Location/add', JSON.stringify(action.payload), {
+        .post(this.apiUrl + '/Location/save', JSON.stringify(action.payload), {
           headers: { 'Content-Type': 'application/json' }
         })
         .pipe(
           map((data: Property) => {
             this.loaderSvc.Close();
-            return UserPropertyActions.SuccessSavePropertyAction({ payload: action.payload });
+            return UserPropertyActions.SuccessSavePropertyAction({ payload: data });
           }),
           catchError((error: Error) => {
             this.loaderSvc.Close();

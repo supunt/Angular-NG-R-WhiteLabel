@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LatLong, GoogleMapMarker, Property, User,
-         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService } from '../shared/export';
+         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService, cloneProperty } from '../shared/export';
 import { ComponentBase } from '../shared/classes/exports';
 import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import { IconColorService } from '../shared/services/icon-color.service';
@@ -70,33 +70,24 @@ export class HomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OnPinSelected(pin: Property) {
-    const activeAddress = this.activeAddressList.filter(x => x.uuid === pin.uuid);
+  OnPinSelected(item: Property) {
+    const activeAddress = this.activeAddressList.filter(x => x.uuid === item.uuid);
+    let editableItem = cloneProperty(item);
+
     this.addressInfoSvc.Open(
       (saveMarker) => {
         saveMarker.draggable = false;
         this.SaveMarker(saveMarker);
       },
       (deleteMarker) => {
-        this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: pin }));
-      }, pin);
+        this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: editableItem }));
+      }, editableItem);
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   SaveMarker(pin: Property) {
-    const locAddr = new Property();
-    locAddr.uuid = pin.uuid;
-    locAddr.label = pin.label;
-    locAddr.draggable = pin.draggable;
-    locAddr.address = pin.address;
-    locAddr.saved = pin.saved;
-    locAddr.lat = pin.lat;
-    locAddr.lng = pin.lng;
-    locAddr.propertyType = pin.propertyType;
-    locAddr.propertyState = pin.propertyState;
-    locAddr.saved = pin.saved;
+    const locAddr = cloneProperty(pin);
     locAddr.iconColor = this.icolorSvc.getUserIconColor();
-
     this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: locAddr }));
   }
 

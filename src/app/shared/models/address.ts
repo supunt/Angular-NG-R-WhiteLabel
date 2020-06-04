@@ -64,3 +64,21 @@ export class Property implements GoogleMapMarker {
   public propertyState: PropertyState = null;
   public iconColor = 'red';
 }
+
+
+export function cloneProperty(orgProp: Property) {
+  const locAddr = new Property();
+  locAddr.uuid = orgProp.uuid;
+  locAddr.label = orgProp.label;
+  locAddr.draggable = orgProp.draggable;
+  locAddr.address = orgProp.address;
+  locAddr.lat = orgProp.lat;
+  locAddr.lng = orgProp.lng;
+  locAddr.propertyType = orgProp.propertyType;
+  locAddr.propertyState = orgProp.propertyState;
+  locAddr.saved = orgProp.saved;
+  locAddr.iconColor = orgProp.iconColor;
+  locAddr.notes = orgProp.notes;
+
+  return locAddr;
+}

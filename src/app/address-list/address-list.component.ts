@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
 import { User, Property, GoogleMapMarker } from '../shared/export';
 import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
@@ -19,11 +19,15 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   userLocations$: Observable<UserPropertiesState>;
   myLocations: Property[] = null;
   @Output() addressClicked: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
+  @ViewChild('addressList', {static : false}) adrListRef: ElementRef;
+  @ViewChild('togOn', {static : false}) togOn: ElementRef;
+  @ViewChild('togOff', {static : false}) togOff: ElementRef;
   expanded = false;
 
   // -------------------------------------------------------------------------------------------------------------------
   constructor(private infoSvc: AddressInfoModalService,
-              private store: Store<{ userProperties: UserPropertiesState }>) {
+              private store: Store<{ userProperties: UserPropertiesState }>,
+              private renderer: Renderer2) {
     super();
     this.userLocations$ = store.pipe(select('userProperties'));
   }
@@ -36,6 +40,20 @@ export class AddressListComponent extends ComponentBase implements OnInit {
         this.myLocations = data.userProperties;
       }
     ));
+
+    this.renderer.listen('window', 'click', (event: Event) => {
+      if (this.togOn != null && this.togOn.nativeElement === event.target) {
+        this.expanded = true;
+        event.stopPropagation();
+      } else if (this.togOff != null &&  this.togOff.nativeElement === event.target) {
+        this.expanded = false;
+        event.stopPropagation();
+      }
+      if (this.adrListRef != null && !this.adrListRef.nativeElement.contains(event.target)) {
+        this.expanded = false;
+        event.stopPropagation();
+      }
+    });
 
     this.store.dispatch(UserPropertyAction.GetPropertiesAction());
   }
@@ -55,6 +73,6 @@ export class AddressListComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   toggle() {
-    this.expanded = !this.expanded;
+    // this.expanded = !this.expanded;
   }
 }

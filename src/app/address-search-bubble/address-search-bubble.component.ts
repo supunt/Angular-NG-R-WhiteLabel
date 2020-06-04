@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { GoolgPlacePrediction } from '../shared/export';
 
 @Component({
   selector: 'app-address-search-bubble',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressSearchBubbleComponent implements OnInit {
 
+  searchBubbleHidden = true;
+  @Output() addressPredSelected: EventEmitter<GoolgPlacePrediction> = new EventEmitter<GoolgPlacePrediction>();
   constructor() { }
 
   ngOnInit() {

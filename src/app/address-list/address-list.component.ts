@@ -14,7 +14,7 @@ export class AddressListComponent implements OnInit {
   @Output() addressClicked: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
 
   // -------------------------------------------------------------------------------------------------------------------
-  constructor(private infoSvc: AddressInfoModalService) {
+  constructor(private infoSvc: AddressInfoModalService, private userSvc: UserService) {
 
   }
 
@@ -29,6 +29,8 @@ export class AddressListComponent implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OpenInfoWindow(item) {
-    this.infoSvc.Open(() => {}, () => {}, item, false);
+    this.infoSvc.Open(() => {}, () => {
+      this.userSvc.removeLocation(item);
+    }, item, false);
   }
 }

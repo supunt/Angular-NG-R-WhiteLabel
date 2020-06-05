@@ -18,7 +18,7 @@
             {{model?.address}}
           </div>
         </div>
-        <div class="row justify-content-end mb-1" *ngIf="model.address != null && model.address !== '' && !model.saved">
+        <div class="row justify-content-end mb-1" *ngIf="model.address != null && model.address !== '' && editMode">
           <div class="col-sm-4">
             <button class="w-100 btn btn-outline-info" (click)="addressSearchEnabled = true">Edit Address</button>
           </div>
@@ -43,10 +43,10 @@
           <div class="col-sm-6">
             Name
           </div>
-          <div *ngIf="!model.saved" class="col-sm-6">
+          <div *ngIf="editMode" class="col-sm-6">
             <app-textbox formControlName="name" placeholder="Enter Name" key="propertyName"></app-textbox>
           </div>
-          <div *ngIf="model.saved" class="col-sm-6">
+          <div *ngIf="!editMode" class="col-sm-6">
             {{model?.label}}
           </div>
         </div>
@@ -56,14 +56,14 @@
           <div class="col-sm-6">
             Property Type
           </div>
-          <div *ngIf="!model.saved" class="col-sm-6">
+          <div *ngIf="editMode" class="col-sm-6">
             <app-select formControlName="propertyType"
             placeholder="Select Property Type"
             [optionName]="ddlOptionName"
             [optionValue]="ddlOptionValue"
             [data]="getPropertyTypeDDLObject()"></app-select>
           </div>
-          <div *ngIf="model.saved" class="col-sm-6">
+          <div *ngIf="!editMode" class="col-sm-6">
             {{model != null && model.propertyType != null ? getPropertyTypeDisplay(model.propertyType): ''}}
           </div>
         </div>
@@ -73,13 +73,13 @@
           <div class="col-sm-6">
             Property State
           </div>
-          <div *ngIf="!model.saved" class="col-sm-6">
+          <div *ngIf="editMode" class="col-sm-6">
             <app-select formControlName="propertyState" placeholder="Select Property Type"
             [optionName]="ddlOptionName"
             [optionValue]="ddlOptionValue"
             [data]="getPropertyStateDDLObject()"></app-select>
           </div>
-          <div *ngIf="model.saved" class="col-sm-6">
+          <div *ngIf="!editMode" class="col-sm-6">
             {{model != null && model.propertyState != null ? getPropertyStateDisplay(model.propertyState): ''}}
           </div>
         </div>
@@ -89,10 +89,10 @@
           <div class="col-sm-6">
             Notes
           </div>
-          <div *ngIf="!model.saved" class="col-sm-6">
+          <div *ngIf="editMode" class="col-sm-6">
             <app-text-area formControlName="notes" placeholder="Enter Notes"></app-text-area>
           </div>
-          <div *ngIf="model.saved" class="col-sm-6">
+          <div *ngIf="!editMode" class="col-sm-6">
             {{model?.notes}}
           </div>
         </div>
@@ -109,6 +109,16 @@
     (click)="deleteMarker()"
     ngbAutofocus>Delete</button>
   <button 
+    *ngIf="!editMode"
+    type="button"
+    class="btn btn-primary btn-light"
+    [disabled]="!isFormValid()"
+    [ngClass]="{ 'button-active' : isFormValid()}"
+    data-dismiss="modal"
+    (click)="editMode = !editMode "
+    ngbAutofocus>Edit</button>
+  <button 
+  *ngIf="editMode"
     type="button"
     class="btn btn-primary btn-light"
     [disabled]="!isFormValid()"

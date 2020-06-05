@@ -23,6 +23,7 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
   public ddlOptionName = 'key';
   public ddlOptionValue = 'value';
   public validationErrors = [];
+  public editMode = false;
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
     super();
@@ -87,6 +88,8 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
     this.rxs(this.formGroup.controls.propertyState.valueChanges.subscribe(
       data => this.model.propertyState = data
     ));
+
+    this.editMode = !this.model.saved;
 
   }
 

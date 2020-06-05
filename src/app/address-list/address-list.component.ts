@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
-import { User, Property, GoogleMapMarker, cloneProperty } from '../shared/export';
+import { User, Property, GoogleMapMarker } from '../shared/export';
 import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import UserPropertiesState from '../shared/state/user-properties.state';
 import { Observable } from 'rxjs';
@@ -64,13 +64,12 @@ export class AddressListComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OpenInfoWindow(event: Event, item: Property) {
-    const editableItem = cloneProperty(item);
     event.stopPropagation();
-    this.infoSvc.Open(() => {
-      this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({payload : editableItem}));
-    }, () => {
-      this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : editableItem}));
-    }, editableItem, false);
+    this.infoSvc.Open((model) => {
+      this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({payload : model}));
+    }, (model) => {
+      this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : model}));
+    }, item, false);
   }
 
   // -------------------------------------------------------------------------------------------------------------------

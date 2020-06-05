@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LatLong, GoogleMapMarker, Property, User,
-         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService, cloneProperty } from '../shared/export';
+         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService } from '../shared/export';
 import { ComponentBase } from '../shared/classes/exports';
 import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import { IconColorService } from '../shared/services/icon-color.service';
@@ -72,7 +72,6 @@ export class HomeComponent extends ComponentBase implements OnInit {
   // -------------------------------------------------------------------------------------------------------------------
   OnPinSelected(item: Property) {
     const activeAddress = this.activeAddressList.filter(x => x.uuid === item.uuid);
-    let editableItem = cloneProperty(item);
 
     this.addressInfoSvc.Open(
       (saveMarker) => {
@@ -80,15 +79,14 @@ export class HomeComponent extends ComponentBase implements OnInit {
         this.SaveMarker(saveMarker);
       },
       (deleteMarker) => {
-        this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: editableItem }));
-      }, editableItem);
+        this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: deleteMarker }));
+      }, item);
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   SaveMarker(pin: Property) {
-    const locAddr = cloneProperty(pin);
-    locAddr.iconColor = this.icolorSvc.getUserIconColor();
-    this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: locAddr }));
+    pin.iconColor = this.icolorSvc.getUserIconColor();
+    this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: pin }));
   }
 
   // -------------------------------------------------------------------------------------------------------------------

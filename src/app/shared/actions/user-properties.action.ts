@@ -13,17 +13,6 @@ export const SuccessGetPropertiesAction = createAction(
 );
 
 // ---------------------------------------------------------------------------------------------------------------------
-export const AddPropertyAction = createAction(
-    '[Property] - Add Property',
-    props<Property>()
-);
-
-// ---------------------------------------------------------------------------------------------------------------------
-export const SavePropertyAction = createAction(
-    '[Property] - Save Property',
-    props<Property>()
-);
-
 export const BeginSavePropertyAction = createAction(
   '[Property] - Begin Save Property',
   props<{ payload: Property }>()
@@ -36,11 +25,6 @@ export const SuccessSavePropertyAction = createAction(
 );
 
 // ---------------------------------------------------------------------------------------------------------------------
-export const RemovePropertyAction = createAction(
-    '[Property] - Remove Property',
-    props<Property>()
-);
-
 export const BeginRemovePropertyAction = createAction(
   '[Property] - Begin Remove Property',
   props<{ payload: Property }>()

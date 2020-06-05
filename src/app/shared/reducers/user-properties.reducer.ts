@@ -5,7 +5,7 @@ import { Property } from '../models/export';
 
 export const intialState = initializeState();
 
-
+// ---------------------------------------------------------------------------------------------------------------------
 function removePropertry(properties: Property[], uuid: string): Property[] {
     let index = -1;
     let idx = 0;
@@ -26,6 +26,7 @@ function removePropertry(properties: Property[], uuid: string): Property[] {
     return properties;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 function saveLocation(properties: Property[], prop: Property) {
   let index = -1;
   let idx = 0;
@@ -46,6 +47,7 @@ function saveLocation(properties: Property[], prop: Property) {
   }
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 const reducer = createReducer(
   intialState,
   on(UserPropertyAction.GetPropertiesAction, state => state),
@@ -56,31 +58,10 @@ const reducer = createReducer(
         userPropertiesError: null
     };
   }),
-  on(UserPropertyAction.AddPropertyAction, (state: UserPropertiesState, property: Property) => {
-    return {
-        ...state,
-        userProperties: [...state.userProperties, property],
-        userPropertiesError: null
-    };
-  }),
-  on(UserPropertyAction.SavePropertyAction, (state: UserPropertiesState, property: Property) => {
-    return {
-        ...state,
-        userProperties: [...state.userProperties, property],
-        userPropertiesError: null
-    };
-  }),
   on(UserPropertyAction.SuccessSavePropertyAction, (state: UserPropertiesState, { payload }) => {
     return {
         ...state,
         userProperties: saveLocation(state.userProperties, payload),
-        userPropertiesError: null
-    };
-  }),
-  on(UserPropertyAction.RemovePropertyAction, (state: UserPropertiesState, property: Property) => {
-    return {
-        ...state,
-        userProperties:  removePropertry(state.userProperties, property.uuid),
         userPropertiesError: null
     };
   }),
@@ -102,6 +83,7 @@ const reducer = createReducer(
   })
 );
 
+// ---------------------------------------------------------------------------------------------------------------------
 export function UserPropertyReducer(state: UserPropertiesState | undefined, action: Action) {
   return reducer(state, action);
 }

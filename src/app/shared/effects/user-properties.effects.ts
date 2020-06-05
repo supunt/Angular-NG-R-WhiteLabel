@@ -11,10 +11,13 @@ import { LoaderService } from '../components/exports';
 
 @Injectable()
 export class UserPropertiesEffects {
-  constructor(private http: HttpClient, private action$: Actions, private loaderSvc: LoaderService) {}
+
+  constructor(private http: HttpClient, private action$: Actions, private loaderSvc: LoaderService) {
+  }
 
   private apiUrl = environment.apiUrl;
 
+  // -------------------------------------------------------------------------------------------------------------------
   GetUserLocations$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(UserPropertyActions.BeginGetPropertiesAction),
@@ -29,51 +32,52 @@ export class UserPropertiesEffects {
             this.loaderSvc.Close();
             return of(UserPropertyActions.ErrorPropertyAction(error));
           }));
-        })
+      })
     )
   );
 
-
+  // -------------------------------------------------------------------------------------------------------------------
   SaveUserLocation$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(UserPropertyActions.BeginSavePropertyAction),
       mergeMap(action => {
         this.loaderSvc.Open(null, 'Saving Property');
         return this.http
-        .post(this.apiUrl + '/Location/save', JSON.stringify(action.payload), {
-          headers: { 'Content-Type': 'application/json' }
-        })
-        .pipe(
-          map((data: Property) => {
-            this.loaderSvc.Close();
-            return UserPropertyActions.SuccessSavePropertyAction({ payload: data });
-          }),
-          catchError((error: Error) => {
-            this.loaderSvc.Close();
-            return of(UserPropertyActions.ErrorPropertyAction(error));
-          }));
-        })
+          .post(this.apiUrl + '/Location/save', JSON.stringify(action.payload), {
+            headers: { 'Content-Type': 'application/json' }
+          })
+          .pipe(
+            map((data: Property) => {
+              this.loaderSvc.Close();
+              return UserPropertyActions.SuccessSavePropertyAction({ payload: data });
+            }),
+            catchError((error: Error) => {
+              this.loaderSvc.Close();
+              return of(UserPropertyActions.ErrorPropertyAction(error));
+            }));
+      })
     )
   );
 
+  // -------------------------------------------------------------------------------------------------------------------
   RemoveUserLocation$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(UserPropertyActions.BeginRemovePropertyAction),
       mergeMap(action => {
         this.loaderSvc.Open(null, 'Removing Property');
         return this.http
-        .post(this.apiUrl + '/Location/delete/' + action.payload.uuid, {}, {
-          headers: { 'Content-Type': 'application/json' }
-        })
-        .pipe(
-          map((data: Property) => {
-            this.loaderSvc.Close();
-            return UserPropertyActions.SuccessRemovePropertyAction({ payload: action.payload });
-          }),
-          catchError((error: Error) => {
-            this.loaderSvc.Close();
-            return of(UserPropertyActions.ErrorPropertyAction(error));
-          }));
+          .post(this.apiUrl + '/Location/delete/' + action.payload.uuid, {}, {
+            headers: { 'Content-Type': 'application/json' }
+          })
+          .pipe(
+            map((data: Property) => {
+              this.loaderSvc.Close();
+              return UserPropertyActions.SuccessRemovePropertyAction({ payload: action.payload });
+            }),
+            catchError((error: Error) => {
+              this.loaderSvc.Close();
+              return of(UserPropertyActions.ErrorPropertyAction(error));
+            }));
       })
     )
   );

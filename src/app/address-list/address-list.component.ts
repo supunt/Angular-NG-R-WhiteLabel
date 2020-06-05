@@ -64,11 +64,13 @@ export class AddressListComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OpenInfoWindow(event: Event, item: Property) {
-    let editableItem = cloneProperty(item);
+    const editableItem = cloneProperty(item);
     event.stopPropagation();
-    this.infoSvc.Open(() => {}, () => {
+    this.infoSvc.Open(() => {
+      this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({payload : editableItem}));
+    }, () => {
       this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : editableItem}));
-    }, item, false);
+    }, editableItem, false);
   }
 
   // -------------------------------------------------------------------------------------------------------------------

@@ -35,7 +35,7 @@ export enum PropertyState {
 
 // -------------------------------------------------------------------------------------------------------------------
 export function getPropertyStateDisplay(type: PropertyState) {
-  switch(type) {
+  switch (type) {
     case PropertyState.Leased:
       return 'Leased'; break;
     case PropertyState.OwnerOccupied:

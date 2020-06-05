@@ -66,7 +66,6 @@ const reducer = createReducer(
     };
   }),
   on(UserPropertyAction.SuccessRemovePropertyAction, (state: UserPropertiesState, { payload }) => {
-    console.log('SuccessRemovePropertyAction')
     const newMarkers = removePropertry(state.userProperties, payload.uuid);
     return {
         ...state,

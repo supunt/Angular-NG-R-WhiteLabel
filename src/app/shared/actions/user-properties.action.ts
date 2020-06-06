@@ -13,6 +13,20 @@ export const SuccessGetPropertiesAction = createAction(
 );
 
 // ---------------------------------------------------------------------------------------------------------------------
+// Admin actions
+export const GetPropertiesOfUserAction = createAction('[Property] - Get Properties Of User');
+
+export const BeginGetPropertiesOfUserAction = createAction(
+  '[Property] - Begin Get Properties Of User',
+  props<{ userName: string }>()
+);
+
+export const SuccessGetPropertiesOfUserAction = createAction(
+  '[Property] - Success Get Property',
+  props<{ userName: string, payload: Property[] }>()
+);
+
+// ---------------------------------------------------------------------------------------------------------------------
 export const BeginSavePropertyAction = createAction(
   '[Property] - Begin Save Property',
   props<{ payload: Property }>()

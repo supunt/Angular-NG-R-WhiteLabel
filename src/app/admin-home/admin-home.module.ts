@@ -5,6 +5,7 @@ import { AgentListModule } from '../agent-list/agent-list.module';
 import { UserWelcomeModule } from '../user-welcome/user-welcome.module';
 import { AddressListModule } from '../address-list/address-list.module';
 import { SharedModule } from '../shared/shared.module';
+import { UserListModule } from './user-list/user-list.module';
 
 @NgModule({
   declarations: [AdminHomeComponent],
@@ -13,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
     AgentListModule,
     SharedModule,
     UserWelcomeModule,
-    AddressListModule
+    AddressListModule,
+    UserListModule
   ],
   exports: [AdminHomeComponent]
 })

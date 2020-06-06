@@ -73,7 +73,8 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
           // Saving my money :D
           if (this.isLoading) {
             return new Observable( x => {
-              x.next(this.searchedAddresses)
+              this.searchedAddresses = [];
+              x.next(this.searchedAddresses);
               x.complete();
             });
           }

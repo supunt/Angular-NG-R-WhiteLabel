@@ -48,6 +48,16 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
+  OnPinDrop(pin: GoogleMapMarker) {
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+  OnDeleteMarker(pin: Property) {
+    console.log('Deleting marker', pin);
+    // this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: pin }));
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
   OnPinSelected(item: Property) {
     this.addressInfoSvc.Open(
       (saveMarker) => {

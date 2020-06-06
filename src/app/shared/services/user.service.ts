@@ -44,42 +44,42 @@ export class UserService implements OnDestroy {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  addLocation(loc: Property, silent = false) {
-    if (silent) {
-      this.userObject.managedLocations.push(loc);
-      return;
-    }
+  // addLocation(loc: Property, silent = false) {
+  //   if (silent) {
+  //     this.userObject.managedLocations.push(loc);
+  //     return;
+  //   }
 
-    this.subsriptions.push(this.http.post(this.apiUrl + '/Location/add', loc).subscribe(
-      () => {
-        this.userObject.managedLocations.push(loc);
-        this.$loggedInUser.next(this.userObject);
-      }
-    ));
-  }
+  //   this.subsriptions.push(this.http.post(this.apiUrl + '/Location/add', loc).subscribe(
+  //     () => {
+  //       this.userObject.managedLocations.push(loc);
+  //       this.$loggedInUser.next(this.userObject);
+  //     }
+  //   ));
+  // }
 
   // -------------------------------------------------------------------------------------------------------------------
-  removeLocation(mkr: Property) {
-    let index = -1;
+  // removeLocation(mkr: Property) {
+  //   let index = -1;
 
-    let idx = 0;
-    for (const item of this.userObject.managedLocations) {
-      if (item.uuid === mkr.uuid) {
-        index = idx;
-        break;
-      }
-      idx += 1;
-    }
+  //   let idx = 0;
+  //   for (const item of this.userObject.managedLocations) {
+  //     if (item.uuid === mkr.uuid) {
+  //       index = idx;
+  //       break;
+  //     }
+  //     idx += 1;
+  //   }
 
-    if (index !== -1) {
-      this.subsriptions.push(this.http.post(this.apiUrl + '/Location/delete/' + mkr.uuid , {}).subscribe(
-        () => {
-          this.userObject.managedLocations.splice(index, 1);
-          this.$loggedInUser.next(this.userObject);
-        }
-      ));
-    }
-  }
+  //   if (index !== -1) {
+  //     this.subsriptions.push(this.http.post(this.apiUrl + '/Location/delete/' + mkr.uuid , {}).subscribe(
+  //       () => {
+  //         this.userObject.managedLocations.splice(index, 1);
+  //         this.$loggedInUser.next(this.userObject);
+  //       }
+  //     ));
+  //   }
+  // }
 
   // -------------------------------------------------------------------------------------------------------------------
   removeLocationByAdmin(mkr: Property, userId: string) {

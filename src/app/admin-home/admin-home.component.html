@@ -1,4 +1,14 @@
 <app-user-welcome></app-user-welcome>
+<app-user-list></app-user-list>
+<div class="row no-gutters">
+  <div class="col-sm-12">
+    <app-google-map
+      (pinDropped)="OnPinDrop($event)"
+      (pinSelected)="OnPinSelected($event)"
+      (deleteMarker)="OnDeleteMarker($event)" #theMap></app-google-map>
+  </div>
+</div>
+<!-- <app-user-welcome></app-user-welcome>
 <div class="row pt-3">
   <div class="col-sm-12">
     <h4>Agent location Distribution</h4>
@@ -34,4 +44,4 @@
     </div>
   </div>
 </div>
-
+ -->

@@ -17,6 +17,8 @@ import { UserPropertyReducer } from './shared/reducers/user-properties.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserPropertiesEffects } from './shared/effects/user-properties.effects';
 import { AddressSearchBubbleModule } from './address-search-bubble/address-search-bubble.module';
+import { UserReducer } from './shared/reducers/users.reducer';
+import { UserEffects } from './shared/effects/user.effects';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,8 @@ import { AddressSearchBubbleModule } from './address-search-bubble/address-searc
     HttpClientModule,
     AdminHomeModule,
     AgentListModule,
-    StoreModule.forRoot({ userProperties: UserPropertyReducer }),
-    EffectsModule.forRoot([UserPropertiesEffects])
+    StoreModule.forRoot({ userProperties: UserPropertyReducer, users: UserReducer }),
+    EffectsModule.forRoot([UserPropertiesEffects, UserEffects])
   ],
   providers: [
     {

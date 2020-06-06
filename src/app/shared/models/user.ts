@@ -3,7 +3,7 @@ import { Property } from './address';
 export class User {
   userName = '';
   userId = '';
-  managedLocations: Property[] = [];
+  name = '';
   admin = false;
   token = null;
   iconColor = 'red';

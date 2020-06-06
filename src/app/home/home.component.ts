@@ -26,9 +26,7 @@ export class HomeComponent extends ComponentBase implements OnInit {
   userLocations$: Observable<UserPropertiesState>;
 
   constructor(
-    private searchSvc: AddressSearchModalService,
     private mapStateSvc: GoogleMapStateService,
-    private userSvc: UserService,
     private addressInfoSvc: AddressInfoModalService,
     private icolorSvc: IconColorService,
     private store: Store<{ userProperties: UserPropertiesState }>) {
@@ -39,7 +37,6 @@ export class HomeComponent extends ComponentBase implements OnInit {
   pin: GoogleMapMarker = null;
   activeAddressList: Property[] = [];
   private mapReady = false;
-  private markersPushed = false;
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
@@ -60,8 +57,10 @@ export class HomeComponent extends ComponentBase implements OnInit {
 
     this.rxs(this.mapStateSvc.$mapState.subscribe(
       (state) =>  {
-        this.mapReady = true;
-        this.gmap.SetUserMarkers(this.activeAddressList, false);
+        setTimeout(() => {
+          this.mapReady = true;
+          this.gmap.SetUserMarkers(this.activeAddressList, false);
+        }, 500);
       }));
   }
 
@@ -79,6 +78,10 @@ export class HomeComponent extends ComponentBase implements OnInit {
         this.SaveMarker(saveMarker);
       },
       (deleteMarker) => {
+        if (!deleteMarker.saved) {
+          this.gmap.DeleteMarker(deleteMarker);
+          return;
+        }
         this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: deleteMarker }));
       }, item);
   }
@@ -95,7 +98,15 @@ export class HomeComponent extends ComponentBase implements OnInit {
     this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: pin }));
   }
 
-
+  // -------------------------------------------------------------------------------------------------------------------
+  OnAddressDeleteRequest(prop: Property) {
+    if (!prop.saved) {
+      this.gmap.DeleteMarker(prop);
+      return;
+    }
+    this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: prop }));
+  }
+  
   // -------------------------------------------------------------------------------------------------------------------
   OnAddressPrediction(address: GoolgPlacePrediction) {
     const placeDetailSvc = new google.maps.places.PlacesService(document.createElement('div'));

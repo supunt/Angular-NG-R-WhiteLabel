@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
@@ -49,4 +49,14 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+
+    if (event.key === 'Enter') {
+      if (this.formGroup.valid) {
+        this.login();
+      }
+    }
+  }
 }

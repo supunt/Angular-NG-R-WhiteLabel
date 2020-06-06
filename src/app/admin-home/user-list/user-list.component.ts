@@ -18,11 +18,14 @@ export class UserListComponent extends ComponentBase implements OnInit{
   allusers$: Observable<UsersState>;
   users: User[] = [];
   userBubbleHidden = true;
+  
+  // -------------------------------------------------------------------------------------------------------------------
   constructor(private store: Store<{ users: UsersState }>, private renderer: Renderer2) {
     super();
     this.allusers$ = store.pipe(select('users'));
   }
 
+  // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
     this.rxs(this.allusers$.subscribe(
       data => {
@@ -46,4 +49,8 @@ export class UserListComponent extends ComponentBase implements OnInit{
     });
   }
 
+  // -------------------------------------------------------------------------------------------------------------------
+  refresh() {
+    this.store.dispatch(UserActions.BeginGetUserAction());
+  }
 }

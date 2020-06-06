@@ -21,7 +21,6 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   @Output() addressClicked: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
   @ViewChild('addressList', {static : false}) adrListRef: ElementRef;
   @ViewChild('togOn', {static : false}) togOn: ElementRef;
-  @ViewChild('togOff', {static : false}) togOff: ElementRef;
   expanded = false;
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -44,11 +43,7 @@ export class AddressListComponent extends ComponentBase implements OnInit {
       if (this.togOn != null && this.togOn.nativeElement === event.target) {
         this.expanded = true;
         event.stopPropagation();
-      } else if (this.togOff != null &&  this.togOff.nativeElement === event.target) {
-        this.expanded = false;
-        event.stopPropagation();
-      }
-      if (this.adrListRef != null && !this.adrListRef.nativeElement.contains(event.target)) {
+      } else if (this.adrListRef != null && !this.adrListRef.nativeElement.contains(event.target)) {
         this.expanded = false;
         event.stopPropagation();
       }
@@ -63,6 +58,11 @@ export class AddressListComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
+  refresh() {
+    this.store.dispatch(UserPropertyAction.GetPropertiesAction());
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
   OpenInfoWindow(event: Event, item: Property) {
     event.stopPropagation();
     this.infoSvc.Open((model) => {
@@ -70,10 +70,5 @@ export class AddressListComponent extends ComponentBase implements OnInit {
     }, (model) => {
       this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : model}));
     }, item, false);
-  }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  toggle() {
-    // this.expanded = !this.expanded;
   }
 }

@@ -7,10 +7,11 @@
     </div>
     <div *ngIf="!userBubbleHidden" #userListRef>
         <div class="row no-gutters">
-            <div class="col-sm-12 pl-2 pt-2">
+            <div class="col-sm-12 pl-2 pt-2 inline">
                 <h4>
                     Select User
                 </h4>
+                <i class="fa fa-refresh btn float-right" (click)="refresh()"></i>
             </div>
         </div>
         <div class="row">

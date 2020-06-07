@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ComponentBase } from 'src/app/shared/classes/exports';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/export';
@@ -15,6 +15,7 @@ export class UserListComponent extends ComponentBase implements OnInit {
 
   @ViewChild('userListRef', {static: false}) userListRef: ElementRef;
   @ViewChild('togOn', {static: false}) togOn: ElementRef;
+  @Output() userSelected: EventEmitter<User> = new EventEmitter<User>();
   allusers$: Observable<UsersState>;
   users: User[] = [];
   userBubbleHidden = true;
@@ -57,8 +58,9 @@ export class UserListComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  userSelected(username) {
-    console.log(`before ${this.selectedUser}, after : ${username}`);
-    this.selectedUser = username;
+  userIsSelected(user: User) {
+    console.log(`before ${this.selectedUser}, after : ${user.userName}`);
+    this.selectedUser = user.userName;
+    this.userSelected.emit(user);
   }
 }

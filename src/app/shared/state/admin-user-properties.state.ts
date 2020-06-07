@@ -1,5 +1,3 @@
-import { Property } from '../models/export';
-
 export default class AdminUserPropertiesState {
   userProperties: {};
   userPropertiesError: Error;

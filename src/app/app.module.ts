@@ -16,6 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserPropertiesEffects } from './shared/effects/user-properties.effects';
 import { UserReducer } from './shared/reducers/users.reducer';
 import { UserEffects } from './shared/effects/user.effects';
+import { AdminUserPropertyReducer } from './shared/reducers/admin-user-properties.reducer';
+import { AdminUserPropertiesEffects } from './shared/effects/admin-user-properties.effects';
 
 @NgModule({
   declarations: [
@@ -29,8 +31,16 @@ import { UserEffects } from './shared/effects/user.effects';
     NgbModule,
     HttpClientModule,
     AdminHomeModule,
-    StoreModule.forRoot({ userProperties: UserPropertyReducer, users: UserReducer }),
-    EffectsModule.forRoot([UserPropertiesEffects, UserEffects])
+    StoreModule.forRoot({
+      userProperties: UserPropertyReducer,
+      users: UserReducer,
+      adminUserProperties : AdminUserPropertyReducer
+    }),
+    EffectsModule.forRoot([
+      UserPropertiesEffects,
+      UserEffects,
+      AdminUserPropertiesEffects
+    ])
   ],
   providers: [
     {

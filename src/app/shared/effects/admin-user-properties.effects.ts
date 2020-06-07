@@ -22,9 +22,10 @@ export class AdminUserPropertiesEffects {
     this.action$.pipe(
       ofType(AdminUserPropertyActions.BeginGetPropertiesOfUserAction),
       mergeMap(action => {
-        this.loaderSvc.Open(null, 'Loading Properties');
+        this.loaderSvc.Open(null, `Loading Properties ...`);
         return this.http.get(this.apiUrl + `/Location/get-agent-locations/${action.userId}`).pipe(
           map((data: Property[]) => {
+            console.log(data);
             this.loaderSvc.Close();
             return AdminUserPropertyActions.SuccessGetPropertiesOfUserAction({ payload: data, userId: action.userId });
           }),

@@ -1,5 +1,5 @@
 <app-user-welcome></app-user-welcome>
-<app-user-list></app-user-list>
+<app-user-list (userSelected)="agentSelected($event)"></app-user-list>
 <div class="row no-gutters">
   <div class="col-sm-12">
     <app-google-map

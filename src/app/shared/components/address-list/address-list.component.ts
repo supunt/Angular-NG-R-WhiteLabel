@@ -1,12 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { UserService } from '../shared/services/user.service';
-import { User, Property, GoogleMapMarker } from '../shared/export';
-import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
-import UserPropertiesState from '../shared/state/user-properties.state';
+import { User, Property, GoogleMapMarker } from '../../export';
+import UserPropertiesState from '../../state/user-properties.state';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { ComponentBase } from '../shared/classes/exports';
-import * as UserPropertyAction from '../shared/actions/user-properties.action';
+import { ComponentBase } from '../../classes/exports';
+import * as UserPropertyAction from '../../actions/user-properties.action';
+import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 
 
 @Component({

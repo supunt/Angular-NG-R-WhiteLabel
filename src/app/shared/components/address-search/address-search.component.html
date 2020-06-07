@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-sm-12">
           <app-textbox key="firstName" formControlName="address" placeholder="Enter Address">
-            <span *ngIf="isLoading">Searching Addresses ... </span><i *ngIf="isLoading"
-              class="fa fa-spinner  fa-spin ror-search-spinner"></i>
+            <span class="text-white" *ngIf="isLoading">Searching Addresses ... </span><i *ngIf="isLoading"
+              class="fa fa-spinner  fa-spin ror-search-spinner text-white"></i>
             <ul *ngIf="searchedAddresses != null" class="list-group ror-search-group">
               <li class="list-group-item ror-search-group-item" *ngFor="let addr of searchedAddresses"
                 (click)="addressPredictionSelected(addr)">{{addr.description}}</li>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddressSearchBubbleComponent } from './address-search-bubble.component';
-import { SharedModule } from '../shared/shared.module';
+import { AddressSearchModule } from '../address-search/address-search.module';
 
 
 
@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [AddressSearchBubbleComponent],
   imports: [
     CommonModule,
-    SharedModule
+    AddressSearchModule
   ],
   exports : [AddressSearchBubbleComponent]
 })

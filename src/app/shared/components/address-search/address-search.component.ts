@@ -1,13 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { LatLong, GoogleMapMarker, Guid, GoolgPlacePrediction } from '../../export';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapStateService } from '../google-map/map-state.service';
 import { ComponentBase } from '../../classes/exports';
 import { Subject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { debounceTime, switchMap, catchError } from 'rxjs/operators';
+import { GoogleMapMarker, GoolgPlacePrediction } from '../../models/export';
 
 
 declare var google: any;
@@ -88,7 +86,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
           if (filteredAddresses.length > 0) {
             this.searchedAddresses = filteredAddresses;
             const retObj = new Observable( x => {
-              x.next(filteredAddresses)
+              x.next(filteredAddresses);
               x.complete();
             });
 
@@ -129,9 +127,14 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
       })
     ).subscribe(
       (data: []) => {
+        this.showAddresses = true;
         this.isLoading = false;
         console.log('Address search data', data);
         this.searchedAddresses = data;
+      },
+      err => {
+        this.showAddresses = false;
+        this.searchedAddresses = [];
       }
     ));
   }

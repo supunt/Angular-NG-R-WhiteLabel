@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Property, FormFields, FormValidators,
-         GoolgPlacePrediction, PropertyType,
-         getPropertyTypeDisplay,
-         getPropertyStateDisplay, PropertyState, SelectedDropdownItem } from '../shared/export';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ComponentBase } from '../shared/classes/exports';
+import { ComponentBase } from '../../classes/exports';
+import { Property, PropertyType, PropertyState, getPropertyTypeDisplay, getPropertyStateDisplay,
+  SelectedDropdownItem, GoolgPlacePrediction } from '../../models/export';
+import { FormFields, FormValidators } from '../../utils/export';
 
 @Component({
   selector: 'app-address-info-modal',

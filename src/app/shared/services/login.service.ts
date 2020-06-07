@@ -1,15 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { User } from '../models/user';
-import { ReplaySubject, Subscribable, Subscription } from 'rxjs';
-import { Property, GoogleMapMarker } from '../models/export';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { Property } from '../models/export';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements OnDestroy {
+export class LoginService implements OnDestroy {
 
 
   private apiUrl = environment.apiUrl;
@@ -42,44 +41,6 @@ export class UserService implements OnDestroy {
     this.userObject.userName = user.userName;
     this.$loggedInUser.next(this.userObject);
   }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  // addLocation(loc: Property, silent = false) {
-  //   if (silent) {
-  //     this.userObject.managedLocations.push(loc);
-  //     return;
-  //   }
-
-  //   this.subsriptions.push(this.http.post(this.apiUrl + '/Location/add', loc).subscribe(
-  //     () => {
-  //       this.userObject.managedLocations.push(loc);
-  //       this.$loggedInUser.next(this.userObject);
-  //     }
-  //   ));
-  // }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  // removeLocation(mkr: Property) {
-  //   let index = -1;
-
-  //   let idx = 0;
-  //   for (const item of this.userObject.managedLocations) {
-  //     if (item.uuid === mkr.uuid) {
-  //       index = idx;
-  //       break;
-  //     }
-  //     idx += 1;
-  //   }
-
-  //   if (index !== -1) {
-  //     this.subsriptions.push(this.http.post(this.apiUrl + '/Location/delete/' + mkr.uuid , {}).subscribe(
-  //       () => {
-  //         this.userObject.managedLocations.splice(index, 1);
-  //         this.$loggedInUser.next(this.userObject);
-  //       }
-  //     ));
-  //   }
-  // }
 
   // -------------------------------------------------------------------------------------------------------------------
   removeLocationByAdmin(mkr: Property, userId: string) {

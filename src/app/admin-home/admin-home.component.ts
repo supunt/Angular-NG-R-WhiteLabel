@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User, Property, GoogleMapMarker } from '../shared/export';
-import { UserService } from '../shared/services/user.service';
+import { User, Property, GoogleMapMarker, AddressInfoModalService } from '../shared/export';
+import { LoginService } from '../shared/services/login.service';
 import { ComponentBase } from '../shared/classes/exports';
-import { AgmMap } from '@agm/core';
-import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import { GoogleMapComponent } from '../shared/components/google-map/google-map.component';
 
 @Component({
@@ -14,12 +12,12 @@ import { GoogleMapComponent } from '../shared/components/google-map/google-map.c
 export class AdminHomeComponent extends ComponentBase implements OnInit {
 
   @ViewChild('theMap', { static : false }) mapRef: GoogleMapComponent;
-  constructor(private userSvc: UserService, private addressInfoSvc: AddressInfoModalService) {
-    super();
-  }
-
   selectedAgent: User = null;
   selectedAgentLocations: Property[] = [];
+
+  constructor(private loginSvc: LoginService, private addressInfoSvc: AddressInfoModalService) {
+    super();
+  }
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
@@ -33,7 +31,7 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   loadAgentLocations(user: User) {
-    this.rxs(this.userSvc.getAgentLocations(user.userName).subscribe(
+    this.rxs(this.loginSvc.getAgentLocations(user.userName).subscribe(
       (data: Property[]) =>  {
         this.selectedAgentLocations = data;
         this.mapRef.SetUserMarkers(this.selectedAgentLocations, false);
@@ -63,7 +61,7 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
       (saveMarker) => {
       },
       (deleteMarker) => {
-        this.rxs(this.userSvc.removeLocationByAdmin(deleteMarker, this.selectedAgent.userName).subscribe(
+        this.rxs(this.loginSvc.removeLocationByAdmin(deleteMarker, this.selectedAgent.userName).subscribe(
           success => this.loadAgentLocations(this.selectedAgent),
           err => this.loadAgentLocations(this.selectedAgent)
         ));

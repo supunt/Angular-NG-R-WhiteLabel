@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddressInfoModalComponent } from './address-info-modal.component';
 import { Subscription } from 'rxjs';
-import { Property, cloneProperty } from '../shared/export';
+import { Property, cloneProperty } from '../../models/export';
 
 @Injectable({
   providedIn: 'root'

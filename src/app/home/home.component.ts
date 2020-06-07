@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LatLong, GoogleMapMarker, Property, User,
-         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService } from '../shared/export';
+         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService, AddressInfoModalService } from '../shared/export';
 import { ComponentBase } from '../shared/classes/exports';
-import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import { IconColorService } from '../shared/services/icon-color.service';
 import { GoogleMapComponent } from '../shared/components/google-map/google-map.component';
-import { UserService } from '../shared/services/user.service';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as UserPropertyAction from '../shared/actions/user-properties.action';
@@ -106,7 +104,7 @@ export class HomeComponent extends ComponentBase implements OnInit {
     }
     this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: prop }));
   }
-  
+
   // -------------------------------------------------------------------------------------------------------------------
   OnAddressPrediction(address: GoolgPlacePrediction) {
     const placeDetailSvc = new google.maps.places.PlacesService(document.createElement('div'));

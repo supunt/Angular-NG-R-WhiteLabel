@@ -20,7 +20,10 @@
             </div>
         </div>
         <div class="row no-gutters">
-            <div *ngFor="let user of users" class="col-sm-12 btn border">
+            <div *ngFor="let user of users" 
+            class="col-sm-12 btn border" 
+            [ngClass] = "{'selected-user' : this.selectedUser === user.userName}"
+            (click)="userSelected(user.userName)">
                 {{user.name}}
             </div>
         </div>

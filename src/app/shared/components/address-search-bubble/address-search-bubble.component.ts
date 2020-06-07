@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { GoolgPlacePrediction } from '../shared/export';
+import { GoolgPlacePrediction } from '../../export';
 
 @Component({
   selector: 'app-address-search-bubble',

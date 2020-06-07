@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddressSearchComponent } from './address-search.component';
-import { GoogleMapMarker } from '../../export';
+import { GoogleMapMarker } from '../../models/export';
 
 @Injectable({
   providedIn: 'root'

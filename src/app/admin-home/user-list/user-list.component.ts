@@ -11,14 +11,15 @@ import * as UserActions from '../../shared/actions/users.actions';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent extends ComponentBase implements OnInit{
+export class UserListComponent extends ComponentBase implements OnInit {
 
   @ViewChild('userListRef', {static: false}) userListRef: ElementRef;
   @ViewChild('togOn', {static: false}) togOn: ElementRef;
   allusers$: Observable<UsersState>;
   users: User[] = [];
   userBubbleHidden = true;
-  
+  selectedUser = null;
+
   // -------------------------------------------------------------------------------------------------------------------
   constructor(private store: Store<{ users: UsersState }>, private renderer: Renderer2) {
     super();
@@ -27,6 +28,7 @@ export class UserListComponent extends ComponentBase implements OnInit{
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
+    this.selectedUser = localStorage.getItem('loggedinUser');
     this.rxs(this.allusers$.subscribe(
       data => {
         this.users = data.users;
@@ -52,5 +54,11 @@ export class UserListComponent extends ComponentBase implements OnInit{
   // -------------------------------------------------------------------------------------------------------------------
   refresh() {
     this.store.dispatch(UserActions.BeginGetUserAction());
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+  userSelected(username) {
+    console.log(`before ${this.selectedUser}, after : ${username}`);
+    this.selectedUser = username;
   }
 }

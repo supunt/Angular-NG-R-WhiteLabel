@@ -1,4 +1,3 @@
-import { User } from '../models/user';
 import { Property } from '../models/export';
 
 export default class UserPropertiesState {

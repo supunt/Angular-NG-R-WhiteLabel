@@ -7,6 +7,7 @@ export const GetUserAction = createAction('[User] - Get Users');
 
 export const BeginGetUserAction = createAction('[User] - Begin Get Users');
 
+// Called back by Effects
 export const SuccessGetUserAction = createAction(
   '[User] - Success Get Users',
   props<{ payload: User[] }>()

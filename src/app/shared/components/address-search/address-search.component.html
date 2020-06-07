@@ -3,28 +3,16 @@
     <form [formGroup]="formGroup">
       <div class="row">
         <div class="col-sm-12">
-          <app-textbox key="firstName" formControlName="address" placeholder="Enter Address">
-            <span class="text-white" *ngIf="isLoading">Searching Addresses ... </span><i *ngIf="isLoading"
+          <app-textbox key="firstName" formControlName="address" placeholder="Enter Address" #searchBox>
+          </app-textbox>
+          <span class="text-white" *ngIf="isLoading">Searching Addresses ... </span><i *ngIf="isLoading"
               class="fa fa-spinner  fa-spin ror-search-spinner text-white"></i>
-            <ul *ngIf="searchedAddresses != null" class="list-group ror-search-group">
+            <ul *ngIf="showAddresses" class="list-group ror-search-group">
               <li class="list-group-item ror-search-group-item" *ngFor="let addr of searchedAddresses"
                 (click)="addressPredictionSelected(addr)">{{addr.description}}</li>
             </ul>
-          </app-textbox>
         </div>
       </div>
     </form>
-  </div>
-</div>
-
-<div *ngIf="showNearbyAddresses" class="row">
-  <div class="col-sm-12 text-right">
-    <span class="btn-link pointer-cursor" (click)="showAddresses = !showAddresses">Nearby Addresses</span>
-  </div>
-</div>
-<div *ngIf="showAddresses" class="row ml-1 mr-1 ">
-  <div *ngFor="let addressItem of addressList" class="col-sm-12 border pointer-cursor"
-    (click)="addressSelectedFromList(addressItem)">
-    {{addressItem.address}}
   </div>
 </div>

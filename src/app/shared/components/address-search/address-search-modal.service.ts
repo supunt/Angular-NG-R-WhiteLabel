@@ -11,14 +11,9 @@ export class AddressSearchModalService {
   modalRef: NgbModalRef = null;
   constructor(private modalService: NgbModal) { }
 
-  public Open(
-    pin: GoogleMapMarker,
-    addressSelctCB) {
+  public Open(pin: GoogleMapMarker, addressSelctCB) {
     this.modalRef = this.modalService.open(AddressSearchComponent,  {backdrop : 'static'});
-
     const modalInstance = this.modalRef.componentInstance as AddressSearchComponent;
-    modalInstance.setPin(pin);
-
     modalInstance.addressSelected.subscribe(
       selection => {
         addressSelctCB(selection);

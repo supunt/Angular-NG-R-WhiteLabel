@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapStateService } from '../google-map/map-state.service';
 import { ComponentBase } from '../../classes/exports';
@@ -17,9 +17,9 @@ declare var google: any;
 })
 export class AddressSearchComponent extends ComponentBase implements OnInit {
 
-  @Input() latLong: GoogleMapMarker = null;
   @Output() addressSelected: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
   @Output() addressPredSelected: EventEmitter<GoolgPlacePrediction> = new EventEmitter<GoolgPlacePrediction>();
+  @ViewChild('searchBox', {static : false}) searchBox;
   @Input() showNearbyAddresses = false;
 
   public addressList: GoogleMapMarker[] = [];
@@ -46,8 +46,6 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
     });
 
     this.mapStateSvc.$mapState.subscribe((state: boolean) => this.isMapReady = state);
-
-    this.loadNearbyAddresses();
     this.formGroup.controls.address.setValue('');
 
       // Search field subscription
@@ -57,9 +55,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
       }
     }));
 
-    setTimeout( () => {
-      this.createDelayedSearchSubscription();
-    }, 2000);
+    this.createDelayedSearchSubscription();
   }
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -92,6 +88,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
 
             return retObj;
           }
+          this.showAddresses = false;
           this.searchedAddresses = [];
           const acs =  new google.maps.places.AutocompleteService();
           return new Observable(x =>  {
@@ -127,64 +124,18 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
       })
     ).subscribe(
       (data: []) => {
-        this.showAddresses = true;
-        this.isLoading = false;
-        console.log('Address search data', data);
         this.searchedAddresses = data;
+        this.isLoading = false;
+        this.showAddresses = true;
+        console.log('Address search data', data);
       },
       err => {
-        this.showAddresses = false;
+        console.error('Search error', err);
         this.searchedAddresses = [];
+        this.isLoading = false;
+        this.showAddresses = false;
       }
     ));
-  }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  public setPin(pin: GoogleMapMarker) {
-    this.addressList = [];
-    this.latLong = pin;
-    this.loadNearbyAddresses();
-  }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  public mapReady() {
-    this.isMapReady = true;
-    this.loadNearbyAddresses();
-  }
-
-  // -------------------------------------------------------------------------------------------------------------------
-  private loadNearbyAddresses() {
-    if (this.latLong != null && this.latLong.lat != null && this.latLong.lng != null && this.isMapReady) {
-      const geocoder = new google.maps.Geocoder();
-      const latlng = new google.maps.LatLng(this.latLong.lat, this.latLong.lng);
-      const request = {
-        latLng: latlng
-      };
-
-      geocoder.geocode(request, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (results != null) {
-            const filtered = results.filter(x => x.geometry.location_type !== 'APPROXIMATE');
-            console.log('Nearby addresses', filtered);
-
-            for (const item of filtered) {
-              this.addressList.push( {
-                lat: item.geometry.location.lat(),
-                lng: item.geometry.location.lng(),
-                address: item.formatted_address,
-                draggable: true,
-                uuid: this.latLong.uuid,
-                saved: false,
-                iconColor: ''
-              });
-            }
-
-          } else {
-            alert('No address available');
-          }
-        }
-      });
-    }
   }
 
   // -------------------------------------------------------------------------------------------------------------------

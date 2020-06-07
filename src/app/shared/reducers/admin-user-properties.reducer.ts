@@ -16,15 +16,20 @@ function getUpdatedUserProperties(userProperties: {}, userId: string, newPropLis
 }
 // ---------------------------------------------------------------------------------------------------------------------
 function savePropertryOfUser(userProperties: {}, userId: string, prop: Property) {
-  if (userProperties[userId] == null) {
-    userProperties[userId] = [prop];
-    return;
+  let newuserProperties = {};
+  for (const item of (Object.keys(userProperties))) {
+    newuserProperties[item] = userProperties[item];
   }
 
-  const usersProps = userProperties[userId];
+  if (newuserProperties[userId] == null) {
+    newuserProperties[userId] = [prop];
+    return newuserProperties;
+  }
+
+
   let index = -1;
   let idx = 0;
-  for (const item of usersProps) {
+  for (const item of userProperties[userId]) {
     if (item.uuid === prop.uuid) {
       index = idx;
       break;
@@ -33,18 +38,26 @@ function savePropertryOfUser(userProperties: {}, userId: string, prop: Property)
   }
 
   if (index !== -1) {
-    const newState = usersProps.slice();
-    newState.splice(index, 1, prop);
-    return newState;
+    const newPropArray = userProperties[userId].slice();
+    newPropArray.splice(index, 1, prop);
+    userProperties[userId] = newPropArray;
+    return userProperties;
   } else {
-    return [...usersProps, prop];
+    newuserProperties[userId].push(prop);
+    return newuserProperties;
   }
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-function removePropertryFromUser(userProperties: {}, userId: string, uuid: string): Property[] {
+function removePropertryFromUser(userProperties: {}, userId: string, uuid: string): {} {
   if (userProperties[userId] == null) {
-    return;
+    return userProperties;
+  }
+
+  const usersProps = userProperties[userId];
+
+  if (userProperties[userId] == null) {
+    return userProperties;
   }
 
   const properties = userProperties[userId];

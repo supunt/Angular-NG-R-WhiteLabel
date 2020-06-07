@@ -67,13 +67,14 @@ export class AdminUserPropertiesEffects {
       mergeMap(action => {
         this.loaderSvc.Open(null, 'Removing Property');
         return this.http
-          .post(this.apiUrl + `/Location/delete/${action.userId}/${action.payload.uuid}` , {}, {
+          .post(this.apiUrl + `/Location/delete/${action.payload.uuid}/${action.userId}` , {}, {
             headers: { 'Content-Type': 'application/json' }
           })
           .pipe(
             map((data: Property) => {
               this.loaderSvc.Close();
-              return AdminUserPropertyActions.SuccessRemovePropertyOfUserAction({ payload: action.payload, userId: action.userId });
+              return AdminUserPropertyActions.SuccessRemovePropertyOfUserAction(
+                { payload: action.payload, userId: action.userId });
             }),
             catchError((error: Error) => {
               this.loaderSvc.Close();

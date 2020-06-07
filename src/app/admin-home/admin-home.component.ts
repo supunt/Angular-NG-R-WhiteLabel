@@ -34,7 +34,7 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
     this.rxs(this.allAgentProperties$.subscribe(
       data => {
         this.selectedAgentLocations = [];
-        console.log('userProperties', data.userProperties)
+        console.log('userProperties', data.userProperties);
         if (data.userProperties[this.selectedAgentId] != null) {
           this.selectedAgentLocations = data.userProperties[this.selectedAgentId];
           this.mapRef.SetUserMarkers(this.selectedAgentLocations, false);
@@ -72,23 +72,26 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OnPinSelected(item: Property) {
-    // const activeAddress = this.activeAddressList.filter(x => x.uuid === item.uuid);
+    const activeAddress = this.selectedAgentLocations.filter(x => x.uuid === item.uuid);
 
-    // this.addressInfoSvc.Open(
-    //   (saveMarker) => {
-    //     saveMarker.draggable = false;
-    //     this.SaveMarker(saveMarker);
-    //   },
-    //   (deleteMarker) => {
-    //     if (!deleteMarker.saved) {
-    //       this.gmap.DeleteMarker(deleteMarker);
-    //       return;
-    //     }
-    //     this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: deleteMarker }));
-    //   }, item);
+    this.addressInfoSvc.Open(
+      (saveMarker) => {
+        saveMarker.draggable = false;
+        this.store.dispatch(AdminUserPropertyAction.BeginSavePropertyOfUserAction(
+          { userId: this.selectedAgentId, payload: saveMarker }));
+      },
+      (deleteMarker) => {
+        if (!deleteMarker.saved) {
+          this.mapRef.DeleteMarker(deleteMarker);
+          return;
+        }
+        this.store.dispatch(AdminUserPropertyAction.BeginRemovePropertyOfUserAction(
+          { userId: this.selectedAgentId, payload: deleteMarker }));
+      }, item);
   }
 
+  // -------------------------------------------------------------------------------------------------------------------
   OnAddressListRefeshReq() {
-    this.store.dispatch(AdminUserPropertyAction.BeginGetPropertiesOfUserAction( {userId: this.selectedAgentId}));
+    this.store.dispatch(AdminUserPropertyAction.BeginGetPropertiesOfUserAction( { userId: this.selectedAgentId }));
   }
 }

@@ -34,8 +34,10 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
     this.rxs(this.allAgentProperties$.subscribe(
       data => {
         this.selectedAgentLocations = [];
+        console.log('userProperties', data.userProperties)
         if (data.userProperties[this.selectedAgentId] != null) {
           this.selectedAgentLocations = data.userProperties[this.selectedAgentId];
+          this.mapRef.SetUserMarkers(this.selectedAgentLocations, false);
         }
       },
       err => {
@@ -70,14 +72,23 @@ export class AdminHomeComponent extends ComponentBase implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   OnPinSelected(item: Property) {
+    // const activeAddress = this.activeAddressList.filter(x => x.uuid === item.uuid);
+
     // this.addressInfoSvc.Open(
     //   (saveMarker) => {
+    //     saveMarker.draggable = false;
+    //     this.SaveMarker(saveMarker);
     //   },
     //   (deleteMarker) => {
-    //     this.rxs(this.loginSvc.removeLocationByAdmin(deleteMarker, this.selectedAgent.userName).subscribe(
-    //       success => this.loadAgentLocations(this.selectedAgent),
-    //       err => this.loadAgentLocations(this.selectedAgent)
-    //     ));
-    //   }, item, false);
+    //     if (!deleteMarker.saved) {
+    //       this.gmap.DeleteMarker(deleteMarker);
+    //       return;
+    //     }
+    //     this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: deleteMarker }));
+    //   }, item);
+  }
+
+  OnAddressListRefeshReq() {
+    this.store.dispatch(AdminUserPropertyAction.BeginGetPropertiesOfUserAction( {userId: this.selectedAgentId}));
   }
 }

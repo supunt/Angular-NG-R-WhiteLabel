@@ -85,6 +85,11 @@ export class HomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
+  OnAddressListRefeshReq() {
+    this.store.dispatch(UserPropertyAction.BeginGetPropertiesAction());
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
   SaveMarker(pin: Property) {
     pin.iconColor = this.icolorSvc.getUserIconColor();
     this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: pin }));

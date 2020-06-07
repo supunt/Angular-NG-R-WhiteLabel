@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { User, Property, GoogleMapMarker } from '../../export';
-import UserPropertiesState from '../../state/user-properties.state';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { ComponentBase } from '../../classes/exports';
@@ -15,29 +14,21 @@ import { AddressInfoModalService } from '../address-info-modal/address-info-moda
 })
 export class AddressListComponent extends ComponentBase implements OnInit {
 
-  userLocations$: Observable<UserPropertiesState>;
-  myLocations: Property[] = null;
-  @Output() addressClicked: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
+  @Input() locations: Property[] = null;
+  @Output() addressClicked: EventEmitter<Property> = new EventEmitter<Property>();
+  @Output() addressSelected: EventEmitter<Property> = new EventEmitter<Property>();
+  @Output() refreshRequested: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('addressList', {static : false}) adrListRef: ElementRef;
   @ViewChild('togOn', {static : false}) togOn: ElementRef;
   expanded = false;
 
   // -------------------------------------------------------------------------------------------------------------------
-  constructor(private infoSvc: AddressInfoModalService,
-              private store: Store<{ userProperties: UserPropertiesState }>,
-              private renderer: Renderer2) {
+  constructor(private renderer: Renderer2) {
     super();
-    this.userLocations$ = store.pipe(select('userProperties'));
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.rxs(this.userLocations$.subscribe(
-      data => {
-        this.myLocations = data.userProperties;
-      }
-    ));
-
     this.renderer.listen('window', 'click', (event: Event) => {
       if (this.togOn != null && this.togOn.nativeElement === event.target) {
         this.expanded = true;
@@ -47,27 +38,21 @@ export class AddressListComponent extends ComponentBase implements OnInit {
         event.stopPropagation();
       }
     });
-
-    this.store.dispatch(UserPropertyAction.GetPropertiesAction());
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  focussAddress(mapLoc: GoogleMapMarker) {
+  locationClicked(mapLoc: Property) {
     this.addressClicked.emit(mapLoc);
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  refresh() {
-    this.store.dispatch(UserPropertyAction.GetPropertiesAction());
+  locationDoubleClicked(event: Event, item: Property) {
+    event.stopPropagation();
+    this.addressSelected.emit(item);
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OpenInfoWindow(event: Event, item: Property) {
-    event.stopPropagation();
-    this.infoSvc.Open((model) => {
-      this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({payload : model}));
-    }, (model) => {
-      this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({payload : model}));
-    }, item, false);
+  refreshClicked() {
+    this.refreshRequested.emit();
   }
 }

@@ -9,4 +9,8 @@
       (deleteMarker)="OnDeleteMarker($event)" #theMap></app-google-map>
   </div>
 </div>
-<app-address-list (addressClicked)="gmap.FocusMarker($event)"></app-address-list>
+<app-address-list 
+  [locations]="activeAddressList"
+  (addressClicked)="gmap.FocusMarker($event)"
+  (addressSelected)="OnPinSelected($event)"
+  (refreshRequested)="OnAddressListRefeshReq()"></app-address-list>

@@ -7,14 +7,17 @@
   <div *ngIf="expanded" class="container inner-container" #addressList>
     <div class="row pb-2 pr-2 pl-2">
       <div class="col-sm-12 inline">
-        <h4>Location List</h4> <i class="fa fa-refresh btn float-right" (click)="refresh()"></i>
+        <h4>Location List</h4> <i class="fa fa-refresh btn float-right" (click)="refreshClicked()"></i>
       </div>
       <div class="col-sm-12">
         <hr>
       </div>
-      <div class="col-sm-12 table-container" *ngIf="myLocations != null">
+      <div class="col-sm-12 table-container" *ngIf="locations != null">
         <table class="table table-bordered">
-          <tr style="cursor: pointer;" *ngFor="let item of myLocations" (click)="focussAddress(item)" (dblclick)="OpenInfoWindow($event, item)">
+          <tr style="cursor: pointer;" 
+            *ngFor="let item of locations" 
+            (click)="locationClicked(item)" 
+            (dblclick)="locationDoubleClicked($event, item)">
             <td class="p-1">{{item?.label}}</td>
             <td class="p-1">{{item.address !== '' ? item.address : item.uuid}}</td>
           </tr>

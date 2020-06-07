@@ -5,6 +5,15 @@ import { Property } from '../models/export';
 
 export const intialState = initializeState();
 
+function getUpdatedUserProperties(userProperties: {}, userId: string, newPropList: Property[]) {
+  const newuserProperties = {};
+  for (const item of (Object.keys(userProperties))) {
+    newuserProperties[item] = userProperties[item];
+  }
+
+  newuserProperties[userId] = newPropList;
+  return newuserProperties;
+}
 // ---------------------------------------------------------------------------------------------------------------------
 function savePropertryOfUser(userProperties: {}, userId: string, prop: Property) {
   if (userProperties[userId] == null) {
@@ -62,10 +71,10 @@ function removePropertryFromUser(userProperties: {}, userId: string, uuid: strin
 const reducer = createReducer(
   intialState,
   on(AdminUserPropertyAction.GetPropertiesOfUserAction, state => state),
-  on(AdminUserPropertyAction.SuccessGetPropertiesOfUserAction, (state: AdminUserPropertiesState, { payload }) => {
+  on(AdminUserPropertyAction.SuccessGetPropertiesOfUserAction, (state: AdminUserPropertiesState, { userId, payload }) => {
     return {
         ...state,
-        userProperties: payload,
+        userProperties: getUpdatedUserProperties(state.userProperties, userId, payload),
         userPropertiesError: null
     };
   }),

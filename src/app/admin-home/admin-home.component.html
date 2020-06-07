@@ -8,6 +8,11 @@
       (deleteMarker)="OnDeleteMarker($event)" #theMap></app-google-map>
   </div>
 </div>
+<app-address-list 
+  [locations]="selectedAgentLocations"
+  (addressClicked)="mapRef.FocusMarker($event)"
+  (addressSelected)="OnPinSelected($event)"
+  (refreshRequested)="OnAddressListRefeshReq()"></app-address-list>
 <!-- <app-user-welcome></app-user-welcome>
 <div class="row pt-3">
   <div class="col-sm-12">

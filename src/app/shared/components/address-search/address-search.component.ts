@@ -19,7 +19,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
 
   @Output() addressSelected: EventEmitter<GoogleMapMarker> = new EventEmitter<GoogleMapMarker>();
   @Output() addressPredSelected: EventEmitter<GoolgPlacePrediction> = new EventEmitter<GoolgPlacePrediction>();
-  @ViewChild('searchBox', {static : false}) searchBox;
+  @ViewChild('searchBox', {static : false}) searchBox: ElementRef;
   @Input() showNearbyAddresses = false;
 
   public addressList: GoogleMapMarker[] = [];
@@ -127,7 +127,7 @@ export class AddressSearchComponent extends ComponentBase implements OnInit {
         this.searchedAddresses = data;
         this.isLoading = false;
         this.showAddresses = true;
-        console.log('Address search data', data);
+        this.searchBox.nativeElement.click();
       },
       err => {
         console.error('Search error', err);

@@ -1,5 +1,9 @@
 import { NgbTimeAdapter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class TimepickerAdapter extends NgbTimeAdapter<string>  {
 
   fromModel(timeString: string): NgbTimeStruct {

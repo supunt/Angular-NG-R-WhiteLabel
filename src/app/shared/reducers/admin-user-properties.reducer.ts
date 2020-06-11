@@ -72,12 +72,22 @@ function removePropertryFromUser(userProperties: {}, userId: string, uuid: strin
   }
 
   if (index !== -1) {
-      const newState = properties.slice();
-      newState.splice(index, 1);
-      return newState;
+    const newState = properties.slice();
+    newState.splice(index, 1);
+
+    let newuserProperties = {};
+    for (const item of (Object.keys(userProperties))) {
+      if (userId !== item) {
+        newuserProperties[item] = userProperties[item];
+      } else {
+        newuserProperties[item] = newState;
+      }
+    }
+
+    return newuserProperties;
   }
 
-  return properties;
+  return userProperties;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -86,31 +96,31 @@ const reducer = createReducer(
   on(AdminUserPropertyAction.GetPropertiesOfUserAction, state => state),
   on(AdminUserPropertyAction.SuccessGetPropertiesOfUserAction, (state: AdminUserPropertiesState, { userId, payload }) => {
     return {
-        ...state,
-        userProperties: getUpdatedUserProperties(state.userProperties, userId, payload),
-        userPropertiesError: null
+      ...state,
+      userProperties: getUpdatedUserProperties(state.userProperties, userId, payload),
+      userPropertiesError: null
     };
   }),
   on(AdminUserPropertyAction.SuccessAddPropertyToUserAction, (state: AdminUserPropertiesState, { userId, payload }) => {
     return {
-        ...state,
-        userProperties: savePropertryOfUser(state.userProperties, userId, payload),
-        userPropertiesError: null
+      ...state,
+      userProperties: savePropertryOfUser(state.userProperties, userId, payload),
+      userPropertiesError: null
     };
   }),
   on(AdminUserPropertyAction.SuccessRemovePropertyOfUserAction, (state: AdminUserPropertiesState, { userId, payload }) => {
     const newMarkers = removePropertryFromUser(state.userProperties, userId, payload.uuid);
     return {
-        ...state,
-        userProperties: newMarkers,
-        userPropertiesError: null
+      ...state,
+      userProperties: newMarkers,
+      userPropertiesError: null
     };
   }),
   on(AdminUserPropertyAction.ErrorPropertyOfUserAction, (state: AdminUserPropertiesState, error: Error) => {
     console.error(error);
     return {
-        ...state,
-        userPropertiesError: error
+      ...state,
+      userPropertiesError: error
     };
   })
 );

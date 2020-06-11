@@ -1,14 +1,14 @@
-<div class="row justify-content-center pt-5">
-  <div class="col-sm-8 d-flex justify-content-center">
+<div class="row w-100 h-100 justify-content-center ">
+  <div class="col-auto border middle">
     <form [formGroup]="formGroup">
-      <div class="row pb-3">
+      <div class="row pb-2 pt-2">
         <div class="col-sm-12 d-flex justify-content-center">
           <h2>Login</h2>
         </div>
       </div>
       <div class="row pb-2">
         <div class="col-sm-12">
-          <hr>
+          <hr class="m-1">
         </div>
       </div>
       <div class="row pb-2">
@@ -27,12 +27,7 @@
           <app-password key="password" formControlName="password" placeholder="Enter Password"></app-password>
         </div>
       </div>
-      <div *ngIf="loginError != null" class="row text-danger">
-        <div class="col-sm-12">
-          Login Failed : {{loginError}}
-        </div>
-      </div>
-      <div class="row">
+      <div class="row pb-2">
         <div class="col-sm-6">
           <button
             type="button"
@@ -45,7 +40,15 @@
           <i *ngIf="sendAsync" class="fa fa-spinner fa-spin float-right"></i>
         </div>
       </div>
-
+      
     </form>
+    <div *ngIf="loginError != null" class="row rounded mt-1 mb-1 ">
+      <div class="col-sm-12">
+        <hr class="m-1">
+      </div>
+      <div class="col-sm-12 d-flex justify-content-center">
+        <span class="inline  bg-danger text-white text-center p-2 rounded">Login Failed : {{loginError}}</span>
+      </div>
+    </div>
   </div>
 </div>

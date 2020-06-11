@@ -1,4 +1,19 @@
 <app-user-welcome></app-user-welcome>
+<app-user-list (userSelected)="agentSelected($event)"></app-user-list>
+<div class="row no-gutters">
+  <div class="col-sm-12">
+    <app-google-map
+      (pinDropped)="OnPinDrop($event)"
+      (pinSelected)="OnPinSelected($event)"
+      (deleteMarker)="OnDeleteMarker($event)" #theMap></app-google-map>
+  </div>
+</div>
+<app-address-list 
+  [locations]="selectedAgentLocations"
+  (addressClicked)="mapRef.FocusMarker($event)"
+  (addressSelected)="OnPinSelected($event)"
+  (refreshRequested)="OnAddressListRefeshReq()"></app-address-list>
+<!-- <app-user-welcome></app-user-welcome>
 <div class="row pt-3">
   <div class="col-sm-12">
     <h4>Agent location Distribution</h4>
@@ -29,9 +44,9 @@
     <hr>
     <div class="row pl-2 pr-2">
       <div class="col-sm-12">
-        <app-address-list [myLocations]="selectedAgentLocations" (addressClicked)="OnAddressClicked($event)"></app-address-list>
+        <app-address-list (addressClicked)="OnAddressClicked($event)"></app-address-list>
       </div>
     </div>
   </div>
 </div>
-
+ -->

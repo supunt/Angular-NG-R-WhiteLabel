@@ -1,0 +1,27 @@
+.bottom {
+    padding: 5px;
+    margin-bottom: 5px;
+    bottom: 0px;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    background-color: transparent;
+    vertical-align: middle;    
+    align-content: center;
+}
+
+.inner-container {
+    min-height: inherit !important;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 5px;
+
+    .table-container {
+        max-height: 28vh !important;
+        overflow-y: scroll;
+    }
+
+    h4 {
+        display: inline;
+    }
+}

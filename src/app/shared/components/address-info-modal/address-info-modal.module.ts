@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddressInfoModalComponent } from './address-info-modal.component';
-import { AtElementsModule } from '../shared/elements/modules';
+import { AtElementsModule } from '../../elements/modules';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
+import { AddressSearchModule } from '../address-search/address-search.module';
 
 
 
@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     AtElementsModule,
     ReactiveFormsModule,
-    SharedModule
+    AddressSearchModule
   ],
   exports: [AddressInfoModalComponent],
   entryComponents: [AddressInfoModalComponent]

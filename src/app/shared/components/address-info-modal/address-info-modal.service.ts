@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddressInfoModalComponent } from './address-info-modal.component';
 import { Subscription } from 'rxjs';
-import { Property } from '../shared/export';
+import { Property, cloneProperty } from '../../models/export';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,13 @@ export class AddressInfoModalService implements OnDestroy {
   public  Open(
     saveCallback,
     deleteCallback,
-    model: any,
+    model: Property,
     deleteDisabled = false
   ) {
     this.modalRef = this.modalService.open(AddressInfoModalComponent, { backdrop: 'static'});
 
     const modalInstance = this.modalRef.componentInstance as AddressInfoModalComponent;
-    modalInstance.model = model;
+    modalInstance.model = cloneProperty(model);
     modalInstance.deleteDisabled = deleteDisabled;
 
     this.subscriptions.push(modalInstance.deleteClicked.subscribe(

@@ -1,0 +1,5 @@
+<div class="user-welcome align-baseline">
+  <i  class="btn fa fa-user-circle-o" #toggler></i>
+  <span *ngIf="showBalloon" class="text-black-50 pr-3" >Welcome back {{LoggedinUserName}}</span> 
+  <button *ngIf="showBalloon" class="btn btn-danger logout-btn"  (click)="logout()">Logout</button>
+</div>

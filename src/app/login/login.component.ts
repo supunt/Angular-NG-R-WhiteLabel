@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserService } from '../shared/services/user.service';
+import { LoginService } from '../shared/services/login.service';
 import { Router } from '@angular/router';
 import { User, FormFields } from '../shared/export';
 
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   sendAsync = false;
   formGroup: FormGroup;
   public loginError = null;
-  constructor(private formBuilder: FormBuilder, private loginSvc: UserService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private loginSvc: LoginService, private router: Router) { }
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
         this.sendAsync = false;
         this.loginSvc.notifyLoginSuccess(data);
         localStorage.setItem('userToken', JSON.stringify(data.token));
+        localStorage.setItem('loggedinUser', data.userId);
         localStorage.setItem('iconColor', data.iconColor);
         this.router.navigate(['/home']);
       },
@@ -49,4 +50,14 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+
+    if (event.key === 'Enter') {
+      if (this.formGroup.valid) {
+        this.login();
+      }
+    }
+  }
 }

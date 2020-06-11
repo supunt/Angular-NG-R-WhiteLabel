@@ -1,0 +1,17 @@
+<div class="search">
+    <div *ngIf="searchBubbleHidden" class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <i class="search-bubble fa fa-search btn pt-1" (click)="searchBubbleHidden = false"></i>
+        </div>
+    </div>
+    <div *ngIf="!searchBubbleHidden" class="row  justify-content-center">
+        <div class="col-lg-5 col-md-8 col-sm-8 w-75">
+            <app-address-search (addressPredSelected)="addressPredSelected.emit($event)"></app-address-search>
+        </div>
+    </div>
+    <div *ngIf="!searchBubbleHidden" class="row">
+        <div class="col-sm-12 d-flex justify-content-center">
+            <i class="search-bubble fa fa-chevron-up btn pt-1" (click)="searchBubbleHidden = true"></i>
+        </div>
+    </div>
+</div>

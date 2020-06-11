@@ -202,7 +202,7 @@ export class GoogleMapComponent implements OnInit {
 
   // -------------------------------------------------------------------------------------------------------------------
   getIconUri(m: GoogleMapMarker) {
-    if (this.selectedMarker != null && m.uuid == this.selectedMarker.uuid) {
+    if (this.selectedMarker != null && m.uuid === this.selectedMarker.uuid) {
       return `/assets/icons/marker_${m.iconColor}_glow.png`;
     }
     return `/assets/icons/marker_${m.iconColor}.png`;

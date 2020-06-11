@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://agentportalapi.azurewebsites.net/api',
-  googleMapsApiKey: 'AIzaSyC_uretjOYB8TRmdghXMLSqPyFui39ddpw'
+  apiUrl: 'https://localhost:44390/api',
+  googleMapsApiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 };
 
 /*

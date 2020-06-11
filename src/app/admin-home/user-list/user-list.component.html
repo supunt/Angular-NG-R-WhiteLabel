@@ -1,0 +1,31 @@
+
+<div class="user-list">
+    <div *ngIf="userBubbleHidden" class="row no-gutters" #togOn>
+        <div class="col-sm-12 d-flex justify-content-center">
+            <i class="search-bubble fa fa-chevron-left btn pt-1"></i>
+        </div>
+    </div>
+    <div *ngIf="!userBubbleHidden" #userListRef>
+        <div class="row no-gutters">
+            <div class="col-sm-12 pl-2 pt-2 inline">
+                <h4>
+                    Select User
+                </h4>
+                <i class="fa fa-refresh btn float-right" (click)="refresh()"></i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <hr class="m-0">
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div *ngFor="let user of users" 
+            class="col-sm-12 btn border" 
+            [ngClass] = "{'selected-user' : this.selectedUser === user.userName}"
+            (click)="userIsSelected(user)">
+                {{user.name}}
+            </div>
+        </div>
+    </div>
+</div>

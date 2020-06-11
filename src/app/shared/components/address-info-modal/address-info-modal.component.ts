@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Property, FormFields, FormValidators,
-         GoolgPlacePrediction, PropertyType,
-         getPropertyTypeDisplay,
-         getPropertyStateDisplay, PropertyState, SelectedDropdownItem } from '../shared/export';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ComponentBase } from '../shared/classes/exports';
+import { ComponentBase } from '../../classes/exports';
+import { Property, PropertyType, PropertyState, getPropertyTypeDisplay, getPropertyStateDisplay,
+  SelectedDropdownItem, GoolgPlacePrediction } from '../../models/export';
+import { FormFields, FormValidators } from '../../utils/export';
 
 @Component({
   selector: 'app-address-info-modal',
@@ -23,6 +22,7 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
   public ddlOptionName = 'key';
   public ddlOptionValue = 'value';
   public validationErrors = [];
+  public editMode = false;
 
   constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
     super();
@@ -70,10 +70,10 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
       notes: FormFields.default()
     });
 
-    this.formGroup.controls.name.setValue('' , {emitEvent : false});
+    this.formGroup.controls.name.setValue(this.model.label , {emitEvent : false});
     this.formGroup.controls.notes.setValue(this.model.notes , {emitEvent : false});
-    this.formGroup.controls.propertyType.setValue(null , {emitEvent : false});
-    this.formGroup.controls.propertyState.setValue(null , {emitEvent : false});
+    this.formGroup.controls.propertyType.setValue(this.model.propertyType , {emitEvent : false});
+    this.formGroup.controls.propertyState.setValue(this.model.propertyState , {emitEvent : false});
 
     this.rxs(this.formGroup.controls.name.valueChanges.subscribe(
       data => this.model.label = data
@@ -87,6 +87,8 @@ export class AddressInfoModalComponent extends ComponentBase implements OnInit {
     this.rxs(this.formGroup.controls.propertyState.valueChanges.subscribe(
       data => this.model.propertyState = data
     ));
+
+    this.editMode = !this.model.saved;
 
   }
 

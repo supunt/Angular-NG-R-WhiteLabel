@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LatLong, GoogleMapMarker, Property, User,
-         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService } from '../shared/export';
+         GoolgPlacePrediction, Guid, AddressSearchModalService, GoogleMapStateService, AddressInfoModalService } from '../shared/export';
 import { ComponentBase } from '../shared/classes/exports';
-import { AddressInfoModalService } from '../address-info-modal/address-info-modal.service';
 import { IconColorService } from '../shared/services/icon-color.service';
 import { GoogleMapComponent } from '../shared/components/google-map/google-map.component';
-import { AddressSearchComponent } from '../shared/components/address-search/address-search.component';
-import { UserService } from '../shared/services/user.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as UserPropertyAction from '../shared/actions/user-properties.action';
+import UserPropertiesState from '../shared/state/user-properties.state';
 
 
 declare var google: any;
@@ -18,57 +19,47 @@ declare var google: any;
 })
 export class HomeComponent extends ComponentBase implements OnInit {
 
-  @ViewChild('theMap', {static : false}) map: GoogleMapComponent;
-  @ViewChild('addressSearch', {static : false}) addressSerch: AddressSearchComponent;
+  @ViewChild('theMap', {static : false}) gmap: GoogleMapComponent;
+
+  userLocations$: Observable<UserPropertiesState>;
 
   constructor(
-    private searchSvc: AddressSearchModalService,
     private mapStateSvc: GoogleMapStateService,
-    private userSvc: UserService,
     private addressInfoSvc: AddressInfoModalService,
-    private icolorSvc: IconColorService) {
-    super();
+    private icolorSvc: IconColorService,
+    private store: Store<{ userProperties: UserPropertiesState }>) {
+      super();
+      this.userLocations$ = store.pipe(select('userProperties'));
   }
 
   pin: GoogleMapMarker = null;
   activeAddressList: Property[] = [];
   private mapReady = false;
-  private markersPushed = false;
 
   // -------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.rxs(this.mapStateSvc.$mapState.subscribe(
-      (state) =>  {
-        this.mapReady = true;
-        this.addressSerch.mapReady();
-        if (!this.markersPushed) {
-          this.map.SetUserMarkers(this.activeAddressList);
-          this.activeAddressList.forEach(x => this.userSvc.addLocation(x, true));
-          this.markersPushed = true;
-        }
-      }));
-
-    this.rxs(this.userSvc.$loggedInUser.subscribe(
-      (data: User) =>  {
-
-        if (data == null) {
-          return;
-        }
-
-        this.rxs(this.userSvc.getMyLocations().subscribe(
-          (userLocations: Property[]) => {
-            this.activeAddressList = userLocations;
-            if (this.map != null && this.mapReady) {
-              if (!this.markersPushed) {
-                this.activeAddressList.forEach(x => this.userSvc.addLocation(x, true));
-                this.map.SetUserMarkers(this.activeAddressList);
-                this.markersPushed = true;
-              }
-            }
+    this.rxs(this.userLocations$.subscribe(
+      data => {
+        this.activeAddressList = data.userProperties;
+        if (data.userPropertiesError != null) {
+          console.error(data.userPropertiesError);
+        } else {
+          if (this.gmap != null && this.mapReady) {
+              this.gmap.SetUserMarkers(this.activeAddressList, false);
           }
-        ));
+        }
       }
     ));
+
+    this.store.dispatch(UserPropertyAction.BeginGetPropertiesAction());
+
+    this.rxs(this.mapStateSvc.$mapState.subscribe(
+      (state) =>  {
+        setTimeout(() => {
+          this.mapReady = true;
+          this.gmap.SetUserMarkers(this.activeAddressList, false);
+        }, 500);
+      }));
   }
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -76,50 +67,48 @@ export class HomeComponent extends ComponentBase implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------------------------
-  OnPinSelected(pin: Property) {
-    const activeAddress = this.activeAddressList.filter(x => x.uuid === pin.uuid);
-
-    if (activeAddress != null && activeAddress.length === 1) {
-      pin.propertyType = activeAddress[0].propertyType;
-      pin.propertyState = activeAddress[0].propertyState;
-      pin.uuid = activeAddress[0].uuid;
-    }
+  OnPinSelected(item: Property) {
+    const activeAddress = this.activeAddressList.filter(x => x.uuid === item.uuid);
 
     this.addressInfoSvc.Open(
       (saveMarker) => {
-        saveMarker.saved = true;
         saveMarker.draggable = false;
         this.SaveMarker(saveMarker);
       },
       (deleteMarker) => {
-        this.userSvc.removeLocation(deleteMarker);
-        this.map.DeleteMarker(deleteMarker);
-      }, pin);
+        if (!deleteMarker.saved) {
+          this.gmap.DeleteMarker(deleteMarker);
+          return;
+        }
+        this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: deleteMarker }));
+      }, item);
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+  OnAddressListRefeshReq() {
+    this.store.dispatch(UserPropertyAction.BeginGetPropertiesAction());
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   SaveMarker(pin: Property) {
-    const locAddr = new Property();
-    locAddr.uuid = pin.uuid;
-    locAddr.label = pin.label;
-    locAddr.draggable = pin.draggable;
-    locAddr.address = pin.address;
-    locAddr.saved = pin.saved;
-    locAddr.lat = pin.lat;
-    locAddr.lng = pin.lng;
-    locAddr.propertyType = pin.propertyType;
-    locAddr.propertyState = pin.propertyState;
-    locAddr.saved = pin.saved;
-    console.log('Saving marker', locAddr);
-    this.userSvc.addLocation(locAddr);
+    pin.iconColor = this.icolorSvc.getUserIconColor();
+    this.store.dispatch(UserPropertyAction.BeginSavePropertyAction({ payload: pin }));
   }
 
   // -------------------------------------------------------------------------------------------------------------------
   OnDeleteMarker(pin: Property) {
     console.log('Deleting marker', pin);
-    this.userSvc.removeLocation(pin);
+    this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: pin }));
   }
 
+  // -------------------------------------------------------------------------------------------------------------------
+  OnAddressDeleteRequest(prop: Property) {
+    if (!prop.saved) {
+      this.gmap.DeleteMarker(prop);
+      return;
+    }
+    this.store.dispatch(UserPropertyAction.BeginRemovePropertyAction({ payload: prop }));
+  }
 
   // -------------------------------------------------------------------------------------------------------------------
   OnAddressPrediction(address: GoolgPlacePrediction) {
@@ -138,8 +127,8 @@ export class HomeComponent extends ComponentBase implements OnInit {
       };
 
       console.log('Adding new marker by search', newMarker);
-      this.map.markers.push(newMarker);
-      this.map.FocusMarker(newMarker);
+      this.gmap.markers.push(newMarker);
+      this.gmap.FocusMarker(newMarker);
     });
   }
 }
